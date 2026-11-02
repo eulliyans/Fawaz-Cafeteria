@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#103b36">
+  <meta name="description" content="Sign in or create your Fawaz Cafeteria customer account.">
+  <title>Customer Login | Fawaz Cafeteria</title>
+
+  <style>
+:root {
+  --dark: #103b36;
+  --dark2: #082b28;
+  --cyan: #00b7c3;
+  --cream: #fff8e9;
+  --muted: #c2d9d4;
+  --white: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  color: var(--cream);
+  background: var(--dark2);
+}
+
+.site-header {
+  background: var(--dark);
+  border-bottom: 3px solid var(--cyan);
+  padding: 16px 5%;
+}
+
+.header-inner {
+  max-width: 1150px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.brand-logo {
+  color: var(--cream);
+  text-decoration: none;
+  font-size: 23px;
+  font-weight: 800;
+}
+
+.brand-logo span {
+  color: var(--cyan);
+}
+
+.home-link {
+  color: var(--cream);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.home-link:hover,
+.back:hover {
+  color: var(--cyan);
+}
+
+.page-shell {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 38px 18px 30px;
+}
+
+.welcome-heading {
+  text-align: center;
+  margin-bottom: 28px;
+  color: var(--cream);
+}
+
+.welcome-heading .eyebrow {
+  color: var(--cyan);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+
+.welcome-heading h1 {
+  color: var(--cream);
+  font-size: clamp(27px, 5vw, 38px);
+  margin: 0 0 12px;
+}
+
+.welcome-heading p {
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.6;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 460px;
+  margin: 0 auto;
+  padding: 30px;
+  border: 1px solid rgba(0, 183, 195, 0.35);
+  border-radius: 20px;
+  background: var(--dark);
+  color: var(--cream);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
+}
+
+.brand {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.brand a {
+  color: var(--cream);
+  text-decoration: none;
+  font-size: 25px;
+  font-weight: 800;
+}
+
+.brand span {
+  color: var(--cyan);
+}
+
+.brand p {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 10px 0 0;
+}
+
+.tabs {
+  display: flex;
+  gap: 5px;
+  padding: 5px;
+  margin-bottom: 25px;
+  border-radius: 12px;
+  background: var(--dark2);
+}
+
+.tab {
+  flex: 1;
+  border: 0;
+  border-radius: 9px;
+  padding: 12px 8px;
+  background: transparent;
+  color: var(--cream);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.tab.active {
+  background: var(--cyan);
+  color: #062b29;
+}
+
+#formTitle,
+#signedInSection h1 {
+  color: var(--cream);
+}
+
+.subtitle {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+label {
+  display: block;
+  color: var(--cream);
+  font-size: 14px;
+  font-weight: 700;
+  margin: 16px 0 8px;
+}
+
+input {
+  display: block;
+  width: 100%;
+  min-height: 46px;
+  padding: 12px 13px;
+  border: 1px solid #52746e;
+  border-radius: 10px;
+  outline: none;
+  background: var(--dark2);
+  color: var(--white);
+  font-size: 16px;
+}
+
+input::placeholder {
+  color: #b2c8c3;
+  opacity: 1;
+}
+
+input:focus {
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 3px rgba(0, 183, 195, 0.18);
+}
+
+button {
+  font-family: inherit;
+}
+
+#submitButton,
+#signedInSection button,
+#signedInSection a {
+  display: block;
+  width: 100%;
+  margin-top: 20px;
+  padding: 14px 16px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--cyan);
+  color: #062b29;
+  font-size: 15px;
+  font-weight: 800;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#submitButton:hover,
+#signedInSection button:hover,
+#signedInSection a:hover {
+  background: #48d8df;
+}
+
+.forgot {
+  display: inline-block;
+  margin-top: 14px;
+  color: #75e9ee;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.forgot:hover {
+  color: var(--white);
+  text-decoration: underline;
+}
+
+.message {
+  margin-top: 18px;
+  padding: 12px;
+  border: 1px solid #52746e;
+  border-radius: 10px;
+  background: var(--dark2);
+  color: var(--cream);
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.back {
+  display: block;
+  margin-top: 25px;
+  color: var(--muted);
+  font-size: 14px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.site-footer {
+  padding: 20px 15px 28px;
+  color: var(--muted);
+  font-size: 13px;
+  text-align: center;
+}
+
+.hidden {
+  display: none !important;
+}
+
+@media (max-width: 520px) {
+  .page-shell {
+    padding: 28px 14px 22px;
+  }
+
+  .login-card {
+    padding: 22px 18px;
+    border-radius: 16px;
+  }
+
+  .brand-logo {
+    font-size: 20px;
+  }
+
+  .welcome-heading h1 {
+    font-size: 28px;
+  }
+}
+</style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="brand-logo">
+        Fawaz <span>Cafeteria</span>
+      </a>
+
+      <a href="index.html" class="home-link">
+        ← Back to Website
+      </a>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <div class="welcome-heading">
+      <div class="eyebrow">FRESH • SIMPLE • FAMILIAR</div>
+      <h1>Your Fawaz Account</h1>
+      <p>Sign in or create an account to get started.</p>
+    </div>
+
+    <div class="login-card">
+            <div class="brand">
+        <a href="index.html">Welcome to <span>Fawaz</span></a>
+      </div>
+
+      <div class="tabs">
+        <button class="tab active" id="loginTab" type="button">
+          Login
+        </button>
+        <button class="tab" id="signupTab" type="button">
+          Create Account
+        </button>
+      </div>
+
+      <section id="authSection">
+        <h1 id="formTitle">Welcome Back!</h1>
+        <p class="subtitle" id="formSubtitle">
+          Sign in to continue to your customer account.
+        </p>
+
+        <div id="message" class="message"
+          role="status" aria-live="polite"></div>
+
+        <form id="authForm">
+          <div class="field hidden" id="nameField">
+            <label for="fullName">Full Name</label>
+            <input id="fullName" type="text"
+              autocomplete="name" maxlength="100">
+          </div>
+
+          <div class="field">
+            <label for="email">Email Address</label>
+            <input id="email" type="email"
+              autocomplete="email" required maxlength="254">
+          </div>
+
+          <div class="field" id="passwordField">
+            <label for="password">Password</label>
+            <input id="password" type="password"
+              autocomplete="current-password"
+              minlength="6" required>
+          </div>
+
+          <a href="#" class="forgot" id="forgotLink">
+            Forgot Password?
+          </a>
+
+          <button class="main-btn" id="submitButton" type="submit">
+            Login
+          </button>
+        </form>
+      </section>
+
+      <section id="signedInSection" class="hidden">
+        <h1>You're signed in!</h1>
+        <p class="subtitle" id="signedInEmail"></p>
+
+        <button class="main-btn" id="continueButton" type="button">
+          Continue to Website
+        </button>
+
+        <button class="main-btn" id="logoutButton" type="button"
+          style="margin-top:10px;background:#edf4f1;color:#103b36;">
+          Logout
+        </button>
+      </section>
+
+      <a href="index.html" class="back">
+        ← Back to Fawaz Cafeteria
+      </a>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    Fawaz Cafeteria • Umm Al-Salam, Jeddah
+  </footer>
+
+  <!-- Keep the existing Supabase scripts below unchanged. -->
+
+  <!-- Uses the existing Supabase client configuration. -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+
+  
+<script>
+  const loginTab = document.getElementById("loginTab");
+  const signupTab = document.getElementById("signupTab");
+  const authForm = document.getElementById("authForm");
+  const message = document.getElementById("message");
+  const formTitle = document.getElementById("formTitle");
+  const formSubtitle = document.getElementById("formSubtitle");
+  const nameField = document.getElementById("nameField");
+  const fullName = document.getElementById("fullName");
+  const emailInput = document.getElementById("email");
+  const passwordInput = document.getElementById("password");
+  const passwordField = document.getElementById("passwordField");
+  const forgotLink = document.getElementById("forgotLink");
+  const submitButton = document.getElementById("submitButton");
+  const authSection = document.getElementById("authSection");
+  const signedInSection = document.getElementById("signedInSection");
+
+  let currentMode = "login";
+  let loginSupabaseClient = null;
+
+  function showMessage(text) {
+    message.textContent = text;
+    message.classList.add("show");
+  }
+
+  function clearMessage() {
+    message.textContent = "";
+    message.classList.remove("show");
+  }
+
+  function setMode(mode) {
+    currentMode = mode;
+    const isSignup = mode === "signup";
+
+    loginTab.classList.toggle("active", !isSignup);
+    signupTab.classList.toggle("active", isSignup);
+    nameField.classList.toggle("hidden", !isSignup);
+    passwordField.classList.remove("hidden");
+    passwordInput.required = true;
+    forgotLink.classList.toggle("hidden", isSignup);
+
+    passwordInput.autocomplete =
+      isSignup ? "new-password" : "current-password";
+
+    formTitle.textContent =
+      isSignup ? "Create Your Account" : "Welcome Back!";
+
+    formSubtitle.textContent = isSignup
+      ? "Create an account to continue."
+      : "Sign in to your customer account.";
+
+    submitButton.textContent =
+      isSignup ? "Create Account" : "Login";
+
+    clearMessage();
+  }
+
+  function getSupabaseClient() {
+  if (loginSupabaseClient) return loginSupabaseClient;
+
+  const config = window.FAWAZ_SUPABASE_CONFIG;
+
+  if (
+    !window.supabase ||
+    !config ||
+    !config.url ||
+    !config.key
+  ) {
+    throw new Error(
+      "Supabase configuration was not detected. Please check config.js."
+    );
+  }
+
+  loginSupabaseClient = window.supabase.createClient(
+    config.url,
+    config.key
+  );
+
+  return loginSupabaseClient;
+}
+
+  function showSignedIn(user) {
+    authSection.classList.add("hidden");
+    signedInSection.classList.remove("hidden");
+
+    document.getElementById("signedInEmail").textContent =
+      user.email || "Your customer account is active.";
+  }
+
+  async function checkSession() {
+    try {
+      const client = getSupabaseClient();
+      const { data, error } = await client.auth.getSession();
+
+      if (error) throw error;
+
+      if (data.session) {
+        showSignedIn(data.session.user);
+      }
+    } catch (error) {
+      showMessage(
+        error.message || "Could not connect to the account service."
+      );
+    }
+  }
+
+  loginTab.addEventListener("click", function () {
+    setMode("login");
+  });
+
+  signupTab.addEventListener("click", function () {
+    setMode("signup");
+  });
+
+  authForm.addEventListener("submit", async function (event) {
+    event.preventDefault();
+    clearMessage();
+
+    const email = emailInput.value.trim();
+    const password = passwordInput.value;
+    const name = fullName.value.trim();
+
+    if (currentMode === "signup" && !name) {
+      showMessage("Please enter your full name.");
+      fullName.focus();
+      return;
+    }
+
+    submitButton.disabled = true;
+    submitButton.textContent = "Please wait...";
+
+    try {
+      const client = getSupabaseClient();
+
+      if (currentMode === "signup") {
+        const { data, error } = await client.auth.signUp({
+          email: email,
+          password: password,
+          options: {
+            data: {
+              full_name: name
+            },
+            emailRedirectTo:
+              window.location.origin + window.location.pathname
+          }
+        });
+
+        if (error) throw error;
+
+        if (data.session && data.user) {
+          showSignedIn(data.user);
+        } else {
+          setMode("login");
+          showMessage(
+            "Account request submitted. Check your email for a confirmation link before logging in."
+          );
+        }
+      } else {
+        const { data, error } =
+          await client.auth.signInWithPassword({
+            email: email,
+            password: password
+          });
+
+        if (error) throw error;
+
+        showSignedIn(data.user);
+      }
+    } catch (error) {
+      showMessage(
+        error.message || "Something went wrong. Please try again."
+      );
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent =
+        currentMode === "signup" ? "Create Account" : "Login";
+    }
+  });
+
+  forgotLink.addEventListener("click", async function (event) {
+    event.preventDefault();
+    clearMessage();
+
+    const email = emailInput.value.trim();
+
+    if (!email) {
+      showMessage("Enter your email address first.");
+      emailInput.focus();
+      return;
+    }
+
+    try {
+      const client = getSupabaseClient();
+
+      const { error } = await client.auth.resetPasswordForEmail(
+        email,
+        {
+          redirectTo:
+            window.location.origin + window.location.pathname
+        }
+      );
+
+      if (error) throw error;
+
+      showMessage(
+        "If this email is registered, a password reset link will be sent."
+      );
+    } catch (error) {
+      showMessage(
+        error.message || "Could not request a password reset."
+      );
+    }
+  });
+
+  document
+    .getElementById("continueButton")
+    .addEventListener("click", function () {
+      window.location.href = "index.html";
+    });
+
+  document
+    .getElementById("logoutButton")
+    .addEventListener("click", async function () {
+      try {
+        const client = getSupabaseClient();
+        const { error } = await client.auth.signOut();
+
+        if (error) throw error;
+
+        signedInSection.classList.add("hidden");
+        authSection.classList.remove("hidden");
+        authForm.reset();
+        setMode("login");
+
+        showMessage("You have been logged out.");
+      } catch (error) {
+        showMessage(
+          error.message || "Could not log out."
+        );
+      }
+    });
+
+  checkSession();
+</script>
+
+</body>
+</html>
