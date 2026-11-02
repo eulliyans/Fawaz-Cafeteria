@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Admin Login Dashboard | Fawaz Cafeteria</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background: #071315;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .login-box {
+      width: 100%;
+      max-width: 400px;
+      background: #fff;
+      border-radius: 18px;
+      padding: 25px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+    }
+
+    .logo {
+      display: block;
+      width: 90px;
+      height: 90px;
+      object-fit: contain;
+      margin: 0 auto 15px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #003b40;
+      font-size: 23px;
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #777;
+      font-size: 13px;
+      margin-bottom: 22px;
+    }
+
+    label {
+      display: block;
+      color: #333;
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 7px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d7e5e5;
+      border-radius: 9px;
+      font-size: 14px;
+      margin-bottom: 15px;
+      outline: none;
+    }
+
+    .login-button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 9px;
+      background: #006f78;
+      color: #fff;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .login-button:disabled {
+      opacity: 0.6;
+    }
+
+    #status {
+      text-align: center;
+      font-size: 13px;
+      margin-top: 12px;
+      color: #777;
+      min-height: 18px;
+    }
+
+    .back-home {
+      display: block;
+      text-align: center;
+      margin-top: 18px;
+      color: #006f78;
+      text-decoration: none;
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="login-box">
+
+    <img
+      src="../images/fawaz-logo-transparent.png"
+      alt="Fawaz Cafeteria Logo"
+      class="logo"
+    >
+
+    <h1>Fawaz Cafeteria</h1>
+
+    <p class="subtitle">Admin Login Dashboard</p>
+
+    <form id="loginForm">
+
+      <label for="email">Email</label>
+
+      <input
+        type="email"
+        id="email"
+        placeholder="Enter admin email"
+        autocomplete="username"
+        required
+      >
+
+      <label for="password">Password</label>
+
+      <input
+        type="password"
+        id="password"
+        placeholder="Enter password"
+        autocomplete="current-password"
+        required
+      >
+
+      <button
+        type="submit"
+        class="login-button"
+        id="loginButton"
+      >
+        Login
+      </button>
+
+    </form>
+
+    <div id="status">Ready</div>
+
+    <a href="../index.html" class="back-home">
+      ← Back to Home
+    </a>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+    const status = document.getElementById("status");
+    const loginForm = document.getElementById("loginForm");
+    const loginButton = document.getElementById("loginButton");
+
+    const SUPABASE_URL =
+      "https://vqoyhnrhlpnwtnvdxpjn.supabase.co";
+
+    const SUPABASE_KEY =
+      "sb_publishable_9s15tPt0smgSEX_Hsr-t_g_xYH_QFY3";
+
+    if (!window.supabase) {
+
+      status.textContent =
+        "Supabase library could not load.";
+
+    } else {
+
+      const supabaseClient =
+        window.supabase.createClient(
+          SUPABASE_URL,
+          SUPABASE_KEY
+        );
+
+      loginForm.addEventListener("submit", async function(event) {
+
+        event.preventDefault();
+
+        const email =
+          document.getElementById("email").value.trim();
+
+        const password =
+          document.getElementById("password").value;
+
+        status.textContent = "Logging in...";
+        loginButton.disabled = true;
+
+        try {
+
+          const { data, error } =
+            await supabaseClient.auth.signInWithPassword({
+              email: email,
+              password: password
+            });
+
+          if (error) {
+
+            status.textContent =
+              "Login failed: " + error.message;
+
+            loginButton.disabled = false;
+            return;
+          }
+
+          if (data && data.session) {
+
+            status.textContent =
+              "Login successful. Opening dashboard...";
+
+            window.location.href =
+              "./dashboard.html";
+
+            return;
+          }
+
+          status.textContent =
+            "Login failed: No session received.";
+
+          loginButton.disabled = false;
+
+        } catch (error) {
+
+          status.textContent =
+            "Error: " + error.message;
+
+          loginButton.disabled = false;
+        }
+
+      });
+
+    }
+  </script>
+
+</body>
+</html>
