@@ -1,0 +1,3939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Admin Dashboard | Fawaz Cafeteria</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background: #103B36;
+      color: #123;
+      padding: 14px;
+    }
+
+    .dashboard {
+  width: 100%;
+  max-width: 860px;
+  margin: 16px auto;
+  background: #ffffff;
+  border: none;
+  border-radius: 12;
+  padding: 16px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+    .header {
+  margin-bottom: 10px;
+  padding: 12px 16px;
+  background: linear-gradient(
+    135deg,
+    #003b40,
+    #006f78
+  );
+  border-radius: 18px;
+  border: 1px solid rgba(0, 183, 195, 0.35);
+  box-shadow: 0 4px 12px rgba(0, 59, 64, 0.10);
+}
+
+.header h1 {
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 7px;
+  letter-spacing: -0.3px;
+}
+
+.welcome {
+  color: #d8f5f6;
+  font-size: 13px;
+}
+
+    .menu-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+}
+
+.menu-grid .card {
+  padding: 2px 8px;
+  min-height: 0;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0, 59, 64, 0.05);
+}
+
+.menu-grid .card h2 {
+  font-size: 13px;
+  margin-bottom: 2px;
+}
+
+.card {
+  background: #f8fcfc;
+  border: 1px solid #d6e7e8;
+  border-radius: 12px;
+  padding: 5px 10px;
+  min-height: 56px;
+  box-shadow: 0 4px 12px rgba(0, 59, 64, 0.06);
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(0, 59, 64, 0.12);
+}
+
+    .card h2 {
+  color: #003b40;
+  font-size: 16px;
+  font-weight: 800;
+  margin-bottom: 6px;
+  letter-spacing: -0.2px;
+}
+
+    .card p {
+  display: none;
+}
+
+.manager .card {
+  background: #f8fcfc;
+  border: 1px solid #d6e7e8;
+  border-radius: 8px;
+  padding: 2px 10px;
+  min-height: 38px;
+  box-shadow: 0 2px 6px rgba(0, 59, 64, 0.06);
+}
+
+.manager .card p {
+  display: flex;
+  align-items: center;
+  color: #003b40 !important;
+  -webkit-text-fill-color: #003b40 !important;
+  font-size: 13px;
+  font-weight: 700;
+  margin: 0;
+  min-height: 34px;
+}
+
+    .manage-button {
+  width: 100%;
+  padding: 5px 8px;
+  border: 1px solid #006f78;
+  border-radius: 9px;
+  background: #006f78;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.manage-button:hover {
+  background: #00545b;
+  transform: translateY(-1px);
+}
+
+    .manage-button:hover {
+      background: #00545b;
+    }
+
+    .logout {
+      width: 100%;
+      padding: 11px;
+      border: none;
+      border-radius: 9px;
+      background: #006f78;
+      color: #fff;
+      font-size: 14px;
+      font-weight: bold;
+      margin-top: 4px;
+      cursor: pointer;
+    }
+
+    #status {
+      margin-top: 10px;
+      text-align: center;
+      font-size: 12px;
+      color: #777;
+      min-height: 18px;
+    }
+
+    /* Manager */
+
+    .manager {
+  display: none;
+  margin-top: 20px;
+  padding: 18px;
+  background: #ffffff;
+  border: 1px solid #d6e7e8;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 59, 64, 0.10);
+}
+    .manager h2 {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 14px;
+  padding: 10px 12px;
+  background: linear-gradient(135deg, #003b40, #006f78);
+  border-radius: 10px;
+  border: 1px solid rgba(0, 183, 195, 0.35);
+}
+
+    .food-item {
+      background: #f8fbfb;
+      border: 1px solid #dceeed;
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 10px;
+    }
+
+    .food-item h3 {
+      color: #003b40;
+      font-size: 15px;
+      margin-bottom: 10px;
+    }
+
+    .food-item label {
+      display: block;
+      font-size: 11px;
+      color: #666;
+      margin-bottom: 5px;
+    }
+
+    .food-item input {
+      width: 100%;
+      padding: 9px;
+      border: 1px solid #d7e5e5;
+      border-radius: 7px;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .save-food {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      background: #006f78;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 5px;
+    }
+
+    .delete-food {
+      width: 100%;
+      padding: 9px;
+      border: none;
+      border-radius: 8px;
+      background: #b42318;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 7px;
+    }
+
+    .delete-food:hover {
+      background: #8f1c13;
+    }
+
+    .close-manager {
+      width: 100%;
+      padding: 9px;
+      border: 1px solid #006f78;
+      border-radius: 8px;
+      background: #fff;
+      color: #006f78;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    .food-image-preview {
+      width: 120px;
+      max-width: 100%;
+      display: block;
+      margin: 5px 0 10px;
+      border-radius: 9px;
+    }
+.food-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.food-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.food-image-side {
+  width: 90px;
+  flex-shrink: 0;
+}
+
+.food-image-side .food-image-preview {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  margin: 0;
+  border-radius: 8px;
+}
+    /* =========================
+   GALLERY MANAGER
+========================= */
+
+.gallery-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f8fbfb;
+  border: 1px solid #dceeed;
+  border-radius: 10px;
+  padding: 8px;
+  margin-bottom: 8px;
+}
+
+.gallery-item img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+  display: block;
+  margin: 0;
+}
+
+.gallery-item-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.gallery-item-info span {
+  color: #003b40;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.delete-gallery {
+  width: 100%;
+  padding: 8px;
+  border: none;
+  border-radius: 7px;
+  background: #b42318;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.delete-gallery:hover {
+  background: #8f1c13;
+}
+
+@media (max-width: 480px) {
+  .gallery-item {
+    gap: 8px;
+    padding: 7px;
+  }
+
+  .gallery-item img {
+    width: 70px;
+    height: 70px;
+  }
+}
+    .gallery-item-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.gallery-item-info span {
+  color: #003b40;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.delete-gallery {
+  width: 100%;
+  padding: 8px;
+  border: none;
+  border-radius: 7px;
+  background: #b42318;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.delete-gallery:hover {
+  background: #8f1c13;
+}
+  </style>
+</head>
+
+<body>
+
+  <div class="dashboard">
+<div class="header">
+  <h1>Fawaz Cafeteria Admin</h1>
+  <p class="welcome">Management Dashboard</p>
+</div>
+    <!-- MAIN MENU -->
+<div class="menu-grid">
+<div class="card">
+  <h2>🏠 Home</h2>
+
+  <button
+    class="manage-button"
+    type="button"
+    onclick="openHeroManager()"
+  >
+    Manage Home
+  </button>
+</div>
+
+  <div class="card">
+    <h2>🍔 Food</h2>
+    <p>Add, edit, manage prices, food images and delete food.</p>
+
+    <button
+      class="manage-button"
+      type="button"
+      onclick="openFoodManager()"
+    >
+      Manage Food
+    </button>
+  </div>
+
+  <div class="card">
+    <h2>🖼️ Gallery</h2>
+    <p>Manage cafeteria gallery.</p>
+
+    <button
+      class="manage-button"
+      type="button"
+      onclick="openGalleryManager()"
+    >
+      Manage Gallery
+    </button>
+  </div>
+          
+      <div class="card">
+  <h2>🕐 Hours</h2>
+  <p>Manage opening and break times.</p>
+
+  <button
+  class="manage-button"
+  type="button"
+  onclick="openHoursManager()"
+>
+  Manage Opening Hours
+</button>
+</div>
+
+      <div class="card">
+  <h2>📱 Contact</h2>
+  <p>Update WhatsApp contact number.</p>
+
+  <button
+    class="manage-button"
+    type="button"
+    onclick="openWhatsAppManager()"
+  >
+    Manage WhatsApp
+  </button>
+</div>
+
+      <div class="card">
+  <h2>⚙️ Settings</h2>
+  <p>Website content and theme settings.</p>
+
+  <button
+    class="manage-button"
+    type="button"
+    onclick="openSettingsManager()"
+  >
+    Manage Settings
+  </button>
+</div>
+
+<!-- NEW ORDERS CARD -->
+<div class="card">
+  <h2>🛒 Orders</h2>
+  <p>View customer orders and update order status.</p>
+
+  <button
+    class="manage-button"
+    type="button"
+    onclick="openOrdersManager()"
+  >
+    Manage Orders
+  </button>
+</div>
+
+</div>
+</div>
+
+<!-- FOOD MANAGER -->
+
+    <div
+      class="manager"
+      id="foodManager"
+    >
+
+      <h2>🍔 Manage Food</h2>
+
+      <!-- ADD NEW FOOD -->
+
+      <div class="food-item">
+
+  <h3>➕ Add New Food</h3>
+
+  <label>Food Name</label>
+
+  <input
+    type="text"
+    id="newFoodName"
+    placeholder="Food name"
+  >
+
+  <label>Price (SAR)</label>
+
+  <input
+    type="number"
+    id="newFoodPrice"
+    placeholder="Price"
+  >
+        
+  <button
+    class="save-food"
+    type="button"
+    onclick="addNewFood()"
+  >
+    ➕ Add Food
+  </button>
+
+</div>
+
+      <!-- FOOD LIST -->
+
+      <div id="foodList"></div>
+
+      <button
+  class="close-manager"
+  type="button"
+  onclick="closeFoodManager()"
+>
+  ← Back to Dashboard
+</button>
+
+    </div>
+
+
+    <!-- GALLERY MANAGER -->
+<div
+  class="manager"
+  id="galleryManager"
+>
+
+  <h2>🖼️ View food image gallery</h2>
+
+  <div class="food-item">
+
+    <label>Upload Gallery Image</label>
+
+    <input
+      type="file"
+      id="galleryImageFile"
+      accept="image/*"
+    >
+
+    <label>Gallery Image URL</label>
+
+    <input
+      type="text"
+      id="galleryImageUrl"
+      placeholder="Optional image URL"
+    >
+
+    <button
+      class="save-food"
+      type="button"
+      onclick="uploadGalleryImage()"
+    >
+      🖼️ Upload Gallery Image
+    </button>
+
+  </div>
+
+  <div id="galleryList"></div>
+
+  <button
+    class="close-manager"
+    type="button"
+    onclick="closeGalleryManager()"
+  >
+    ← Back to Dashboard
+  </button>
+
+</div>
+
+
+    <!-- LOGOUT -->
+
+    <button
+      class="logout"
+      id="logoutButton"
+      type="button"
+    >
+      Logout
+    </button>
+
+    <div id="status">
+      Checking login...
+    </div>
+
+  </div>
+
+
+  <!-- SUPABASE -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+
+    const SUPABASE_URL =
+      "https://vqoyhnrhlpnwtnvdxpjn.supabase.co";
+
+    const SUPABASE_KEY =
+      "sb_publishable_9s15tPt0smgSEX_Hsr-t_g_xYH_QFY3";
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+      );
+
+    const status =
+      document.getElementById("status");
+
+    const logoutButton =
+      document.getElementById("logoutButton");
+
+
+    /* =========================
+       SESSION CHECK
+    ========================= */
+
+    async function checkSession() {
+
+      const {
+        data: { session }
+      } = await supabaseClient.auth.getSession();
+
+      if (!session) {
+
+        window.location.href = "./";
+
+        return;
+      }
+
+      status.textContent = "Logged in";
+
+}
+
+/* =========================
+   SETTINGS MANAGER
+========================= */
+
+async function saveWebsiteContent() {
+
+  const name =
+    document.getElementById("websiteName").value.trim();
+
+  const welcomeText =
+    document.getElementById("websiteWelcomeText").value.trim();
+
+  const welcomeTextAr =
+    document.getElementById("websiteWelcomeTextAr").value.trim();
+
+  const welcomeTextBn =
+    document.getElementById("websiteWelcomeTextBn").value.trim();
+
+  const title =
+    document.getElementById("websiteHeroTitle").value.trim();
+
+  const description =
+    document.getElementById("websiteHeroDescription").value.trim();
+
+  const aboutTitle =
+    document.getElementById("websiteAboutTitle").value.trim();
+
+  const aboutDescription =
+    document.getElementById("websiteAboutDescription").value.trim();
+
+  const foodTitle =
+    document.getElementById("websiteFoodTitle").value.trim();
+
+  const foodDescription =
+    document.getElementById("websiteFoodDescription").value.trim();
+
+  const galleryTitle =
+    document.getElementById("websiteGalleryTitle").value.trim();
+
+  const galleryDescription =
+    document.getElementById("websiteGalleryDescription").value.trim();
+
+  const hoursText =
+    document.getElementById("websiteHoursText").value.trim();
+
+  const contactTitle =
+    document.getElementById("websiteContactTitle").value.trim();
+
+  const contactDescription =
+    document.getElementById("websiteContactDescription").value.trim();
+
+  const footerText =
+    document.getElementById("websiteFooterText").value.trim();
+
+  const seoTitle =
+    document.getElementById("websiteSeoTitle").value.trim();
+
+  const seoDescription =
+    document.getElementById("websiteSeoDescription").value.trim();
+
+  if (!title || !description) {
+
+    status.textContent =
+      "Please enter Hero Title and Description.";
+
+    return;
+  }
+
+  status.textContent =
+    "Saving website content...";
+
+  const { data: heroData, error: heroError } =
+    await supabaseClient
+      .from("hero")
+      .select("id")
+      .order("id", { ascending: true })
+      .limit(1);
+
+  if (heroError) {
+
+    console.error(
+      "Hero load error:",
+      heroError
+    );
+
+    status.textContent =
+      "Could not load website content.";
+
+    return;
+  }
+
+  if (!heroData || heroData.length === 0) {
+
+    status.textContent =
+      "No Hero record found.";
+
+    return;
+  }
+
+  const heroId =
+    heroData[0].id;
+
+  const { error: websiteError } =
+    await supabaseClient
+      .from("website_settings")
+      .update({
+        website_name: name,
+        about_title: aboutTitle,
+        about_description: aboutDescription,
+        food_title: foodTitle,
+        food_description: foodDescription,
+        gallery_title: galleryTitle,
+        gallery_description: galleryDescription,
+        hours_text: hoursText,
+        contact_title: contactTitle,
+        contact_description: contactDescription,
+        footer_text: footerText,
+        seo_title: seoTitle,
+        seo_description: seoDescription,
+        updated_at: new Date().toISOString()
+      })
+      .eq("id", 1);
+
+  if (websiteError) {
+
+    console.error(
+      "Website settings save error:",
+      websiteError
+    );
+
+    status.textContent =
+      "Website content save failed: " +
+      websiteError.message;
+
+    return;
+  }
+
+  const { error } =
+    await supabaseClient
+      .from("hero")
+      .update({
+        welcome_text: welcomeText,
+        welcome_text_ar: welcomeTextAr,
+        welcome_text_bn: welcomeTextBn,
+        title: title,
+        description: description
+      })
+      .eq("id", heroId);
+
+  if (error) {
+
+    console.error(
+      "Website content save error:",
+      error
+    );
+
+    status.textContent =
+      "Save failed: " + error.message;
+
+    return;
+  }
+
+  status.textContent =
+    "Website content saved successfully.";
+}
+
+
+async function loadWebsiteContent() {
+
+  const { data: websiteData, error: websiteError } =
+    await supabaseClient
+      .from("website_settings")
+      .select(`
+        website_name,
+        about_title,
+        about_description,
+        food_title,
+        food_description,
+        gallery_title,
+        gallery_description,
+        hours_text,
+        contact_title,
+        contact_description,
+        footer_text,
+        seo_title,
+        seo_description
+      `)
+      .eq("id", 1)
+      .single();
+
+  if (websiteError) {
+
+    console.error(
+      "Website settings load error:",
+      websiteError
+    );
+
+    return;
+  }
+
+  const { data: heroData, error: heroError } =
+    await supabaseClient
+      .from("hero")
+      .select(
+        "welcome_text, welcome_text_ar, welcome_text_bn, title, description"
+      )
+      .order("id", { ascending: true })
+      .limit(1)
+      .single();
+
+  if (heroError) {
+
+    console.error(
+      "Hero content load error:",
+      heroError
+    );
+
+    return;
+  }
+
+  const websiteName =
+    document.getElementById("websiteName");
+
+  const welcomeText =
+    document.getElementById("websiteWelcomeText");
+
+  const welcomeTextAr =
+    document.getElementById("websiteWelcomeTextAr");
+
+  const welcomeTextBn =
+    document.getElementById("websiteWelcomeTextBn");
+
+  const heroTitle =
+    document.getElementById("websiteHeroTitle");
+
+  const heroDescription =
+    document.getElementById("websiteHeroDescription");
+
+  const aboutTitle =
+    document.getElementById("websiteAboutTitle");
+
+  const aboutDescription =
+    document.getElementById("websiteAboutDescription");
+
+  const foodTitle =
+    document.getElementById("websiteFoodTitle");
+
+  const foodDescription =
+    document.getElementById("websiteFoodDescription");
+
+  const galleryTitle =
+    document.getElementById("websiteGalleryTitle");
+
+  const galleryDescription =
+    document.getElementById("websiteGalleryDescription");
+
+  const hoursText =
+    document.getElementById("websiteHoursText");
+
+  const contactTitle =
+    document.getElementById("websiteContactTitle");
+
+  const contactDescription =
+    document.getElementById("websiteContactDescription");
+
+  const footerText =
+    document.getElementById("websiteFooterText");
+
+  const seoTitle =
+    document.getElementById("websiteSeoTitle");
+
+  const seoDescription =
+    document.getElementById("websiteSeoDescription");
+
+
+  if (websiteName) {
+    websiteName.value =
+      websiteData.website_name || "";
+  }
+
+  if (welcomeText) {
+    welcomeText.value =
+      heroData.welcome_text || "";
+  }
+
+  if (welcomeTextAr) {
+    welcomeTextAr.value =
+      heroData.welcome_text_ar || "";
+  }
+
+  if (welcomeTextBn) {
+    welcomeTextBn.value =
+      heroData.welcome_text_bn || "";
+  }
+
+  if (heroTitle) {
+    heroTitle.value =
+      heroData.title || "";
+  }
+
+  if (heroDescription) {
+    heroDescription.value =
+      heroData.description || "";
+  }
+
+  if (aboutTitle) {
+    aboutTitle.value =
+      websiteData.about_title || "";
+  }
+
+  if (aboutDescription) {
+    aboutDescription.value =
+      websiteData.about_description || "";
+  }
+
+  if (foodTitle) {
+    foodTitle.value =
+      websiteData.food_title || "";
+  }
+
+  if (foodDescription) {
+    foodDescription.value =
+      websiteData.food_description || "";
+  }
+
+  if (galleryTitle) {
+    galleryTitle.value =
+      websiteData.gallery_title || "";
+  }
+
+  if (galleryDescription) {
+    galleryDescription.value =
+      websiteData.gallery_description || "";
+  }
+
+  if (hoursText) {
+    hoursText.value =
+      websiteData.hours_text || "";
+  }
+
+  if (contactTitle) {
+    contactTitle.value =
+      websiteData.contact_title || "";
+  }
+
+  if (contactDescription) {
+    contactDescription.value =
+      websiteData.contact_description || "";
+  }
+
+  if (footerText) {
+    footerText.value =
+      websiteData.footer_text || "";
+  }
+
+  if (seoTitle) {
+    seoTitle.value =
+      websiteData.seo_title || "";
+  }
+
+  if (seoDescription) {
+    seoDescription.value =
+      websiteData.seo_description || "";
+  }
+}
+
+
+function openWebsiteContentManager() {
+
+  let manager =
+    document.getElementById("websiteContentManager");
+
+  if (!manager) {
+
+    manager =
+      document.createElement("div");
+
+    manager.className = "manager";
+    manager.id = "websiteContentManager";
+
+    manager.innerHTML = `
+      <h2>📝 Website Content</h2>
+
+      <div class="food-item">
+
+        <h3>Website Information</h3>
+
+        <label>Website / Cafeteria Name</label>
+        <input
+          type="text"
+          id="websiteName"
+          placeholder="Fawaz Cafeteria"
+        >
+
+        <label>Welcome Text — English</label>
+        <input
+          type="text"
+          id="websiteWelcomeText"
+          placeholder="WELCOME TO"
+        >
+
+        <label>Welcome Text — Arabic</label>
+        <input
+          type="text"
+          id="websiteWelcomeTextAr"
+          placeholder="مرحباً بكم في"
+        >
+
+        <label>Welcome Text — Bengali</label>
+        <input
+          type="text"
+          id="websiteWelcomeTextBn"
+          placeholder="স্বাগতম"
+        >
+
+        <label>Hero Title</label>
+        <input
+          type="text"
+          id="websiteHeroTitle"
+          placeholder="Welcome to Fawaz Cafeteria"
+        >
+
+        <label>Hero Description</label>
+        <input
+          type="text"
+          id="websiteHeroDescription"
+          placeholder="Fresh food and great taste."
+        >
+
+        <label>About Title</label>
+        <input
+          type="text"
+          id="websiteAboutTitle"
+          placeholder="Simple food, familiar taste"
+        >
+
+        <label>About Description</label>
+        <input
+          type="text"
+          id="websiteAboutDescription"
+          placeholder="Fawaz Cafeteria serves fresh and familiar food for the local community in Umm Al-Salam, Jeddah."
+        >
+
+        <label>Food Section Title</label>
+        <input
+          type="text"
+          id="websiteFoodTitle"
+          placeholder="Our Food Menu"
+        >
+
+        <label>Food Section Description</label>
+        <input
+          type="text"
+          id="websiteFoodDescription"
+          placeholder="Fresh and familiar favorites."
+        >
+
+        <label>Gallery Section Title</label>
+        <input
+          type="text"
+          id="websiteGalleryTitle"
+          placeholder="Our Gallery"
+        >
+
+        <label>Gallery Section Description</label>
+        <input
+          type="text"
+          id="websiteGalleryDescription"
+          placeholder="A look at our food and cafeteria."
+        >
+
+        <label>Opening Hours Section Text</label>
+        <input
+          type="text"
+          id="websiteHoursText"
+          placeholder="Open daily from 5:30 AM to 12:00 PM and 4:00 PM to 12:00 AM."
+        >
+
+        <label>Contact Section Title</label>
+        <input
+          type="text"
+          id="websiteContactTitle"
+          placeholder="Contact Us"
+        >
+
+        <label>Contact Section Description</label>
+        <input
+          type="text"
+          id="websiteContactDescription"
+          placeholder="Get in touch with Fawaz Cafeteria."
+        >
+
+        <label>Footer Text</label>
+        <input
+          type="text"
+          id="websiteFooterText"
+          placeholder="© 2026 Fawaz Cafeteria. All rights reserved."
+        >
+
+        <label>SEO Title</label>
+        <input
+          type="text"
+          id="websiteSeoTitle"
+          placeholder="Fawaz Cafeteria | Umm Al-Salam, Jeddah"
+        >
+
+        <label>SEO Description</label>
+        <input
+          type="text"
+          id="websiteSeoDescription"
+          placeholder="Fawaz Cafeteria in Umm Al-Salam, Jeddah. Fresh food, familiar taste and friendly service."
+        >
+
+        <button
+          class="save-food"
+          type="button"
+          onclick="saveWebsiteContent()"
+        >
+          💾 Save Website Content
+        </button>
+
+      </div>
+
+      <button
+  class="close-manager"
+  type="button"
+  onclick="
+    document.getElementById('websiteContentManager').style.display='none';
+    document.getElementById('settingsManager').style.display='block';
+    window.scrollTo({
+      top: 0,
+      behavior: 'auto'
+    });
+  "
+>
+  ← Back to Settings
+</button>
+    `;
+
+    document
+      .querySelector(".dashboard")
+      .appendChild(manager);
+  }
+
+  manager.style.display = "block";
+
+  manager.scrollIntoView({
+    behavior: "smooth"
+  });
+
+  loadWebsiteContent();
+}
+
+
+function openSettingsManager() {
+
+  let manager =
+    document.getElementById("settingsManager");
+
+  if (!manager) {
+
+    manager =
+      document.createElement("div");
+
+    manager.className = "manager";
+    manager.id = "settingsManager";
+
+    manager.innerHTML = `
+      <h2>⚙️ Settings</h2>
+
+      <div class="food-item">
+
+        <h3>📝 Website Content</h3>
+        <p>Manage website text and content.</p>
+
+        <button
+          class="manage-button"
+          type="button"
+          onclick="openWebsiteContentManager()"
+        >
+          Manage Website Content
+        </button>
+
+      </div>
+
+      <div class="food-item">
+
+        <h3>🧩 Custom Content</h3>
+        <p>Add and manage custom content boxes.</p>
+
+        <button
+          class="manage-button"
+          type="button"
+          onclick="openCustomContentManager()"
+        >
+          Manage Custom Content
+        </button>
+
+      </div>
+
+      <div class="food-item">
+
+        <h3>🎨 Theme Colors</h3>
+        <p>Customize the website theme colors.</p>
+
+        <button
+          class="manage-button"
+          type="button"
+          onclick="openThemeColorsManager()"
+        >
+          Manage Theme Colors
+        </button>
+
+      </div>
+
+      <button
+  class="close-manager"
+  type="button"
+  onclick="
+    document.getElementById('settingsManager').style.display='none';
+
+    document.querySelectorAll('.menu-grid .card').forEach(function(card) {
+      card.style.display = '';
+    });
+
+    window.scrollTo({
+      top: 0,
+      behavior: 'auto'
+    });
+  "
+>
+  ← Back to Dashboard
+</button>
+    `;
+
+    document
+      .querySelector(".dashboard")
+      .appendChild(manager);
+  }
+
+    document.querySelectorAll(
+    ".menu-grid .card"
+  ).forEach(function(card) {
+    card.style.display = "none";
+  });
+
+  manager.style.display = "block";
+
+  manager.scrollIntoView({
+    behavior: "smooth"
+  });
+}
+
+
+async function openThemeColorsManager() {
+
+  let manager =
+    document.getElementById("themeColorsManager");
+
+  if (!manager) {
+
+    manager =
+      document.createElement("div");
+
+    manager.className = "manager";
+    manager.id = "themeColorsManager";
+
+    manager.innerHTML = `
+      <h2>🎨 Theme Colors</h2>
+
+      <div class="food-item">
+
+        <h3>Website Colors</h3>
+
+        <label>Primary / Accent</label>
+        <input
+          type="color"
+          id="themePrimaryColor"
+          value="#00b7c3"
+        >
+
+        <label>Page Background</label>
+        <input
+          type="color"
+          id="themePageBackground"
+          value="#07191b"
+        >
+
+        <label>Section Background</label>
+        <input
+          type="color"
+          id="themeSectionBackground"
+          value="#0b2023"
+        >
+
+        <label>Card Background</label>
+<input
+  type="text"
+  id="themeCardBackground"
+  value="#0b2023"
+  placeholder="#0b2023"
+>
+
+        <label>Hero Overlay</label>
+        <input
+          type="text"
+          id="themeHeroOverlay"
+          value="rgba(0, 190, 200, 0.30)"
+          placeholder="rgba(0, 190, 200, 0.30)"
+        >
+
+        <label>Main Text</label>
+        <input
+          type="color"
+          id="themeMainText"
+          value="#ffffff"
+        >
+
+        <label>Muted Text</label>
+        <input
+          type="color"
+          id="themeMutedText"
+          value="#c9d7d8"
+        >
+
+        <label>Button Background</label>
+        <input
+          type="color"
+          id="themeButtonBackground"
+          value="#00b7c3"
+        >
+
+        <label>Button Text</label>
+        <input
+          type="color"
+          id="themeButtonText"
+          value="#ffffff"
+        >
+
+        <label>Link Color</label>
+        <input
+          type="color"
+          id="themeLinkColor"
+          value="#00b7c3"
+        >
+
+        <label>Footer Background</label>
+        <input
+          type="color"
+          id="themeFooterBackground"
+          value="#061416"
+        >
+
+        <label>Footer Text</label>
+        <input
+          type="color"
+          id="themeFooterText"
+          value="#c9d7d8"
+        >
+
+        <label>Border Color</label>
+        <input
+          type="text"
+          id="themeBorderColor"
+          value="rgba(0, 183, 195, 0.25)"
+          placeholder="rgba(0, 183, 195, 0.25)"
+        >
+
+        <button
+          class="save-food"
+          type="button"
+          onclick="saveThemeColors()"
+        >
+          💾 Save Theme Colors
+        </button>
+
+      </div>
+
+      <button
+  class="close-manager"
+  type="button"
+  onclick="
+    document.getElementById('themeColorsManager').style.display='none';
+    document.getElementById('settingsManager').style.display='block';
+    window.scrollTo({
+      top: 0,
+      behavior: 'auto'
+    });
+  "
+>
+  ← Back to Settings
+</button>
+    `;
+
+    document
+      .querySelector(".dashboard")
+      .appendChild(manager);
+  }
+
+  manager.style.display = "block";
+
+  manager.scrollIntoView({
+    behavior: "smooth"
+  });
+
+
+  /* LOAD SAVED THEME COLORS */
+
+  const { data, error } =
+    await supabaseClient
+      .from("theme_colors")
+      .select("*")
+      .eq("id", 1)
+      .single();
+
+  if (error) {
+
+    console.error(
+      "Theme colors load error:",
+      error
+    );
+
+    return;
+  }
+
+  if (!data) {
+    return;
+  }
+
+
+  document.getElementById(
+    "themePrimaryColor"
+  ).value =
+    data.primary_color || "#00b7c3";
+
+
+  document.getElementById(
+    "themePageBackground"
+  ).value =
+    data.page_background || "#07191b";
+
+
+  document.getElementById(
+    "themeSectionBackground"
+  ).value =
+    data.section_background || "#0b2023";
+
+
+  // document.getElementById(
+//   "themeCardBackground"
+// ).value =
+//   data.card_background || "#0b2023";
+
+
+  document.getElementById(
+    "themeHeroOverlay"
+  ).value =
+    data.hero_overlay ||
+    "rgba(0, 190, 200, 0.30)";
+
+
+  document.getElementById(
+    "themeMainText"
+  ).value =
+    data.main_text || "#ffffff";
+
+
+  document.getElementById(
+    "themeMutedText"
+  ).value =
+    data.muted_text || "#c9d7d8";
+
+
+  document.getElementById(
+    "themeButtonBackground"
+  ).value =
+    data.button_background || "#00b7c3";
+
+
+  document.getElementById(
+    "themeButtonText"
+  ).value =
+    data.button_text || "#ffffff";
+
+
+  document.getElementById(
+    "themeLinkColor"
+  ).value =
+    data.link_color || "#00b7c3";
+
+
+  document.getElementById(
+    "themeFooterBackground"
+  ).value =
+    data.footer_background || "#061416";
+
+
+  document.getElementById(
+    "themeFooterText"
+  ).value =
+    data.footer_text || "#c9d7d8";
+
+
+  document.getElementById(
+    "themeBorderColor"
+  ).value =
+    data.border_color ||
+    "rgba(0, 183, 195, 0.25)";
+}
+
+
+function openCustomContentManager() {
+
+  let manager =
+    document.getElementById("customContentManager");
+
+  if (!manager) {
+
+    manager =
+      document.createElement("div");
+
+    manager.className = "manager";
+    manager.id = "customContentManager";
+
+    manager.innerHTML = `
+      <h2>🧩 Custom Content</h2>
+
+      <div class="food-item">
+
+        <h3>Custom Box 1</h3>
+
+        <label>Title</label>
+        <input
+          type="text"
+          placeholder="Custom title"
+        >
+
+        <label>Description</label>
+        <input
+          type="text"
+          placeholder="Custom description"
+        >
+
+        <label>Status</label>
+
+        <select>
+          <option value="true">Enabled</option>
+          <option value="false">Disabled</option>
+        </select>
+
+        <label>Placement</label>
+
+        <select>
+          <option>Hero After</option>
+          <option>Menu After</option>
+          <option>Gallery After</option>
+          <option>Footer Before</option>
+        </select>
+
+        <button
+          class="save-food"
+          type="button"
+          onclick="saveCustomContent(1)"
+        >
+          💾 Save Box 1
+        </button>
+
+      </div>
+
+      <div class="food-item">
+
+        <h3>Custom Box 2</h3>
+
+        <label>Title</label>
+        <input
+          type="text"
+          placeholder="Custom title"
+        >
+
+        <label>Description</label>
+        <input
+          type="text"
+          placeholder="Custom description"
+        >
+
+        <label>Status</label>
+
+        <select>
+          <option value="true">Enabled</option>
+          <option value="false">Disabled</option>
+        </select>
+
+        <label>Placement</label>
+
+        <select>
+          <option>Hero After</option>
+          <option>Menu After</option>
+          <option>Gallery After</option>
+          <option>Footer Before</option>
+        </select>
+
+        <button
+          class="save-food"
+          type="button"
+          onclick="saveCustomContent(2)"
+        >
+          💾 Save Box 2
+        </button>
+
+      </div>
+
+      <div class="food-item">
+
+        <h3>Custom Box 3</h3>
+
+        <label>Title</label>
+        <input
+          type="text"
+          placeholder="Custom title"
+        >
+
+        <label>Description</label>
+        <input
+          type="text"
+          placeholder="Custom description"
+        >
+
+        <label>Status</label>
+
+        <select>
+          <option value="true">Enabled</option>
+          <option value="false">Disabled</option>
+        </select>
+
+        <label>Placement</label>
+
+        <select>
+          <option>Hero After</option>
+          <option>Menu After</option>
+          <option>Gallery After</option>
+          <option>Footer Before</option>
+        </select>
+
+        <button
+          class="save-food"
+          type="button"
+          onclick="saveCustomContent(3)"
+        >
+          💾 Save Box 3
+        </button>
+
+      </div>
+
+      <button
+  class="close-manager"
+  type="button"
+  onclick="
+    document.getElementById('customContentManager').style.display='none';
+    document.getElementById('settingsManager').style.display='block';
+    window.scrollTo({
+      top: 0,
+      behavior: 'auto'
+    });
+  "
+>
+  ← Back to Settings
+</button>
+    `;
+
+    document
+      .querySelector(".dashboard")
+      .appendChild(manager);
+  }
+
+  manager.style.display = "block";
+
+  manager.scrollIntoView({
+    behavior: "smooth"
+  });
+
+  loadCustomContent();
+}
+async function saveThemeColors() {
+
+  const primaryColor =
+    document.getElementById("themePrimaryColor").value;
+
+  const pageBackground =
+    document.getElementById("themePageBackground").value;
+
+  const sectionBackground =
+    document.getElementById("themeSectionBackground").value;
+
+  const cardBackground =
+    document.getElementById("themeCardBackground").value.trim();
+
+  const heroOverlay =
+    document.getElementById("themeHeroOverlay").value.trim();
+
+  const mainText =
+    document.getElementById("themeMainText").value;
+
+  const mutedText =
+    document.getElementById("themeMutedText").value;
+
+  const buttonBackground =
+    document.getElementById("themeButtonBackground").value;
+
+  const buttonText =
+    document.getElementById("themeButtonText").value;
+
+  const linkColor =
+    document.getElementById("themeLinkColor").value;
+
+  const footerBackground =
+    document.getElementById("themeFooterBackground").value;
+
+  const footerText =
+    document.getElementById("themeFooterText").value;
+
+  const borderColor =
+    document.getElementById("themeBorderColor").value.trim();
+
+
+  console.log(
+    "THEME VALUES BEFORE SAVE:",
+    {
+      primaryColor,
+      pageBackground,
+      sectionBackground,
+      cardBackground,
+      heroOverlay,
+      mainText,
+      mutedText,
+      buttonBackground,
+      buttonText,
+      linkColor,
+      footerBackground,
+      footerText,
+      borderColor
+    }
+  );
+
+
+  status.textContent =
+    "Saving theme colors...";
+
+
+  /* =========================
+     UPDATE DATABASE
+  ========================= */
+
+  const {
+    error: updateError
+  } =
+    await supabaseClient
+      .from("theme_colors")
+      .update({
+        primary_color: primaryColor,
+        page_background: pageBackground,
+        section_background: sectionBackground,
+        card_background: cardBackground,
+        hero_overlay: heroOverlay,
+        main_text: mainText,
+        muted_text: mutedText,
+        button_background: buttonBackground,
+        button_text: buttonText,
+        link_color: linkColor,
+        footer_background: footerBackground,
+        footer_text: footerText,
+        border_color: borderColor,
+        updated_at: new Date().toISOString()
+      })
+      .eq("id", 1);
+
+
+  /* =========================
+     UPDATE ERROR
+  ========================= */
+
+  if (updateError) {
+
+    console.error(
+      "THEME UPDATE ERROR:",
+      updateError
+    );
+
+    status.textContent =
+      "Save failed: " +
+      updateError.message;
+
+    return;
+  }
+
+
+  /* =========================
+     READ DATABASE AGAIN
+  ========================= */
+
+  const {
+    data: savedData,
+    error: readError
+  } =
+    await supabaseClient
+      .from("theme_colors")
+      .select("*")
+      .eq("id", 1)
+      .single();
+
+
+  if (readError) {
+
+    console.error(
+      "THEME READ-BACK ERROR:",
+      readError
+    );
+
+    status.textContent =
+      "Save verification failed: " +
+      readError.message;
+
+    return;
+  }
+
+
+  /* =========================
+     FINAL DATABASE CHECK
+  ========================= */
+
+  console.log(
+    "THEME VALUE ACTUALLY IN DATABASE:",
+    savedData
+  );
+
+  console.log(
+    "DATABASE CARD BACKGROUND:",
+    savedData.card_background
+  );
+
+
+  /* =========================
+     FINAL SUCCESS
+  ========================= */
+
+  status.textContent =
+    "Theme colors saved successfully.";
+
+}
+
+async function saveCustomContent(boxNumber) {
+
+  const manager =
+    document.getElementById("customContentManager");
+
+  const boxes =
+    manager.querySelectorAll(".food-item");
+
+  const box =
+    boxes[boxNumber - 1];
+
+  const inputs =
+    box.querySelectorAll("input");
+
+  const selects =
+    box.querySelectorAll("select");
+
+  const title =
+    inputs[0].value.trim();
+
+  const description =
+    inputs[1].value.trim();
+
+  const isEnabled =
+    selects[0].selectedIndex === 0;
+
+  const placement =
+    selects[1].value;
+
+  status.textContent =
+    "Saving custom content...";
+
+  const { error } =
+    await supabaseClient
+      .from("custom_content")
+      .update({
+        title: title,
+        description: description,
+        is_enabled: isEnabled,
+        placement: placement,
+        updated_at: new Date().toISOString()
+      })
+      .eq("box_number", boxNumber);
+
+  if (error) {
+
+    console.error(
+      "Custom content save error:",
+      error
+    );
+
+    status.textContent =
+      "Save failed: " + error.message;
+
+    return;
+  }
+
+  status.textContent =
+    "Custom Box " + boxNumber +
+    " saved successfully.";
+}
+
+
+async function loadCustomContent() {
+
+  const manager =
+    document.getElementById("customContentManager");
+
+  if (!manager) {
+    return;
+  }
+
+  const { data, error } =
+    await supabaseClient
+      .from("custom_content")
+      .select("*")
+      .order("box_number", {
+        ascending: true
+      });
+
+  if (error) {
+
+    console.error(
+      "Custom content load error:",
+      error
+    );
+
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    return;
+  }
+
+  const boxes =
+    manager.querySelectorAll(".food-item");
+
+  data.forEach(function(item) {
+
+    const box =
+      boxes[item.box_number - 1];
+
+    if (!box) {
+      return;
+    }
+
+    const inputs =
+      box.querySelectorAll("input");
+
+    const selects =
+      box.querySelectorAll("select");
+
+    inputs[0].value =
+      item.title || "";
+
+    inputs[1].value =
+      item.description || "";
+
+    selects[0].value =
+      item.is_enabled ? "true" : "false";
+
+    selects[1].value =
+      item.placement || "Hero After";
+  });
+}
+/* =========================
+   WHATSAPP MANAGER
+========================= */
+
+async function openWhatsAppManager() {
+
+  let manager =
+    document.getElementById("whatsappManager");
+
+  if (!manager) {
+
+    manager =
+      document.createElement("div");
+
+    manager.className = "manager";
+    manager.id = "whatsappManager";
+
+    manager.innerHTML = `
+      <h2>📱 Manage WhatsApp</h2>
+
+      <div class="food-item">
+
+        <label>WhatsApp Number</label>
+
+        <input
+          type="tel"
+          id="whatsappNumber"
+          placeholder="966571638203"
+        >
+
+        <button
+          class="save-food"
+          type="button"
+          onclick="saveWhatsAppNumber()"
+        >
+          💾 Save WhatsApp Number
+        </button>
+
+      </div>
+
+      <button
+  class="close-manager"
+  type="button"
+  onclick="
+    document.getElementById('whatsappManager').style.display='none';
+
+    document.querySelectorAll('.menu-grid .card').forEach(function(card) {
+      card.style.display = '';
+    });
+  "
+>
+  ← Back to Dashboard
+</button>
+    `;
+
+    document
+      .querySelector(".dashboard")
+      .appendChild(manager);
+  }
+
+    document.querySelectorAll(
+    ".menu-grid .card"
+  ).forEach(function(card) {
+    card.style.display = "none";
+  });
+
+  manager.style.display = "block";
+
+  manager.scrollIntoView({
+    behavior: "smooth"
+  });
+
+  status.textContent =
+    "Loading WhatsApp number...";
+
+  const { data, error } =
+    await supabaseClient
+      .from("whatsapp_settings")
+      .select("phone_number")
+      .order("id", { ascending: true })
+      .limit(1);
+
+  if (error) {
+
+    console.error(
+      "WhatsApp load error:",
+      error
+    );
+
+    status.textContent =
+      "Could not load WhatsApp number: " +
+      error.message;
+
+    return;
+  }
+
+  if (data && data.length > 0) {
+
+    document.getElementById(
+      "whatsappNumber"
+    ).value =
+      data[0].phone_number || "";
+  }
+
+  status.textContent =
+    "WhatsApp number loaded.";
+}
+    async function saveWhatsAppNumber() {
+  const input =
+    document.getElementById("whatsappNumber");
+
+  const phoneNumber =
+    input.value.trim().replace(/\D/g, "");
+
+  if (!phoneNumber) {
+    status.textContent =
+      "Please enter a valid WhatsApp number.";
+    return;
+  }
+
+  status.textContent =
+    "Saving WhatsApp number...";
+
+  const { data, error } =
+    await supabaseClient
+      .from("whatsapp_settings")
+      .update({
+        phone_number: phoneNumber,
+        updated_at: new Date().toISOString()
+      })
+      .eq("id", 1)
+      .select("id, phone_number");
+
+  if (error) {
+    console.error("WhatsApp save error:", error);
+
+    status.textContent =
+      "WhatsApp save failed: " + error.message;
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    status.textContent =
+      "No row updated. Check Supabase RLS permissions.";
+    return;
+  }
+
+  status.textContent =
+    "WhatsApp number saved: " +
+    data[0].phone_number;
+}   
+    /* HOME / HERO MANAGER */
+
+    function openHeroManager() {
+  document.querySelectorAll(".card").forEach(function(card) {
+    card.style.display = "none";
+  });
+
+  let manager =
+    document.getElementById("heroManager");
+
+  if (!manager) {
+    
+        manager =
+          document.createElement("div");
+
+        manager.className = "manager";
+        manager.id = "heroManager";
+
+        manager.innerHTML = `
+  <div class="card">
+  <p>Hero section content and image.</p>
+</div>
+
+  <div class="food-item">
+
+            <label>Welcome Text</label>
+            <input
+              type="text"
+              id="heroWelcome"
+            >
+
+            <label>Title</label>
+            <input
+              type="text"
+              id="heroTitle"
+            >
+
+            <label>Description</label>
+<input
+  type="text"
+  id="heroDescription"
+>
+
+<label>Hero Image</label>
+<input
+  type="file"
+  id="heroImageFile"
+  accept="image/*"
+>
+<label>Welcome Text Color</label>
+<input
+  type="color"
+  id="heroWelcomeColor"
+  value="#ffffff"
+>
+
+<label>Title Color</label>
+<input
+  type="color"
+  id="heroTitleColor"
+  value="#ffffff"
+>
+
+<label>Description Color</label>
+<input
+  type="color"
+  id="heroDescriptionColor"
+  value="#ffffff"
+>
+
+<label>Welcome Font Size</label>
+<input
+  type="number"
+  id="heroWelcomeFontSize"
+  value="18"
+  min="10"
+  max="80"
+>
+
+<label>Title Font Size</label>
+<input
+  type="number"
+  id="heroTitleFontSize"
+  value="48"
+  min="20"
+  max="100"
+>
+
+<label>Description Font Size</label>
+<input
+  type="number"
+  id="heroDescriptionFontSize"
+  value="18"
+  min="10"
+  max="60"
+>
+<label>Welcome Mobile Font Size</label>
+<input
+  type="number"
+  id="heroWelcomeMobileFontSize"
+  value="18"
+  min="10"
+  max="80"
+>
+
+<label>Title Mobile Font Size</label>
+<input
+  type="number"
+  id="heroTitleMobileFontSize"
+  value="30"
+  min="20"
+  max="100"
+>
+
+<label>Description Mobile Font Size</label>
+<input
+  type="number"
+  id="heroDescriptionMobileFontSize"
+  value="14"
+  min="10"
+  max="60"
+>
+<button
+  class="save-food"
+  type="button"
+  onclick="saveHeroData()"
+>
+  💾 Save Home Changes
+</button>
+
+          </div>
+
+                    <button
+  class="close-manager"
+  type="button"
+  onclick="
+    document.getElementById('heroManager').style.display='none';
+
+    document.querySelectorAll('.menu-grid .card').forEach(function(card) {
+      card.style.display = '';
+    });
+
+    window.scrollTo({
+      top: 0,
+      behavior: 'auto'
+    });
+  "
+>
+  ← Back to Dashboard
+</button>
+        `;
+
+        document
+          .querySelector(".dashboard")
+          .appendChild(manager);
+      }
+
+manager.style.display = "block";
+
+manager.scrollIntoView({
+  behavior: "smooth"
+});
+
+loadHeroData();
+}
+async function loadHeroData() {
+
+  const { data, error } =
+    await supabaseClient
+      .from("hero")
+      .select("*")
+      .eq("is_active", true)
+      .limit(1);
+
+  if (error) {
+    console.error("Hero load error:", error);
+
+    status.textContent =
+      "Could not load Home data: " +
+      error.message;
+
+    return;
+  }
+
+  if (!data || data.length === 0) {
+
+    status.textContent =
+      "No active Home data found.";
+
+    return;
+  }
+
+  const hero =
+    data[0];
+
+  document.getElementById("heroWelcome").value =
+    hero.welcome_text || "";
+
+  document.getElementById("heroTitle").value =
+    hero.title || "";
+
+  document.getElementById("heroDescription").value =
+    hero.description || "";
+
+document.getElementById("heroWelcomeFontSize").value =
+  parseInt(hero.welcome_font_size) || 18;
+
+document.getElementById("heroTitleFontSize").value =
+  parseInt(hero.title_font_size) || 48;
+
+document.getElementById("heroDescriptionFontSize").value =
+  parseInt(hero.description_font_size) || 18;
+document.getElementById("heroWelcomeMobileFontSize").value =
+  parseInt(hero.welcome_mobile_font_size) || 18;
+
+document.getElementById("heroTitleMobileFontSize").value =
+  parseInt(hero.title_mobile_font_size) || 30;
+
+document.getElementById("heroDescriptionMobileFontSize").value =
+  parseInt(hero.description_mobile_font_size) || 14;
+status.textContent =
+  "Home data loaded successfully.";
+}
+
+async function saveHeroData() {
+const heroImageFile =
+  document.getElementById("heroImageFile").files[0];
+
+let heroImageUrl = null;
+
+if (!heroImageFile) {
+
+  const { data: currentHero } =
+    await supabaseClient
+      .from("hero")
+      .select("image_url, welcome_color, title_color, description_color")
+      .eq("is_active", true)
+      .limit(1);
+
+  if (
+    currentHero &&
+    currentHero.length > 0
+  ) {
+    heroImageUrl =
+      currentHero[0].image_url || null;
+  }
+}
+
+if (heroImageFile) {
+
+  const fileName =
+    Date.now() + "-" + heroImageFile.name;
+
+  const { error: uploadError } =
+    await supabaseClient
+      .storage
+      .from("hero")
+      .upload(fileName, heroImageFile, {
+        upsert: true
+      });
+
+  if (uploadError) {
+
+    console.error(
+      "Hero image upload error:",
+      uploadError
+    );
+
+    status.textContent =
+      "Hero image upload failed: " +
+      uploadError.message;
+
+    return;
+  }
+
+  const { data: publicData } =
+    supabaseClient
+      .storage
+      .from("hero")
+      .getPublicUrl(fileName);
+
+  heroImageUrl =
+    publicData.publicUrl;
+}
+  const welcome =
+    document.getElementById("heroWelcome").value.trim();
+
+  const title =
+    document.getElementById("heroTitle").value.trim();
+
+  const description =
+    document.getElementById("heroDescription").value.trim();
+const welcomeColor =
+  document.getElementById("heroWelcomeColor").value;
+
+const titleColor =
+  document.getElementById("heroTitleColor").value;
+
+const descriptionColor =
+  document.getElementById("heroDescriptionColor").value;
+      const welcomeFontSize =
+  document.getElementById("heroWelcomeFontSize").value;
+
+const titleFontSize =
+  document.getElementById("heroTitleFontSize").value;
+
+const descriptionFontSize =
+  document.getElementById("heroDescriptionFontSize").value;
+  const welcomeMobileFontSize =
+  document.getElementById("heroWelcomeMobileFontSize").value;
+
+const titleMobileFontSize =
+  document.getElementById("heroTitleMobileFontSize").value;
+
+const descriptionMobileFontSize =
+  document.getElementById("heroDescriptionMobileFontSize").value;
+  if (!welcome || !title || !description) {
+
+    status.textContent =
+      "Please fill all Home fields.";
+
+    return;
+  }
+
+  const { data, error } =
+    await supabaseClient
+      .from("hero")
+      .update({
+  welcome_text: welcome,
+  title: title,
+  description: description,
+  image_url: heroImageUrl,
+
+  welcome_color: welcomeColor,
+title_color: titleColor,
+description_color: descriptionColor,
+
+welcome_font_size: welcomeFontSize + "px",
+title_font_size: titleFontSize + "px",
+description_font_size: descriptionFontSize + "px",
+
+welcome_mobile_font_size:
+  welcomeMobileFontSize + "px",
+
+title_mobile_font_size:
+  titleMobileFontSize + "px",
+
+description_mobile_font_size:
+  descriptionMobileFontSize + "px",
+
+updated_at: new Date().toISOString()
+})
+      .eq("is_active", true)
+      .select();
+
+  if (error) {
+
+    console.error(
+      "Hero save error:",
+      error
+    );
+
+    status.textContent =
+      "Home save failed: " +
+      error.message;
+
+    return;
+  }
+
+  if (!data || data.length === 0) {
+
+    status.textContent =
+      "Home save failed: No active row found.";
+
+    return;
+  }
+
+  status.textContent =
+    "Home changes saved successfully.";
+}
+    /* FOOD MANAGER */
+
+    async function openFoodManager() {
+
+      const manager =
+        document.getElementById("foodManager");
+
+      manager.style.display = "block";
+document.querySelectorAll(".menu-grid .card").forEach(function(card) {
+  card.style.display = "none";
+});
+      manager.scrollIntoView({
+        behavior: "smooth"
+      });
+
+      status.textContent =
+        "Food Manager opened.";
+
+      await loadFoodData();
+
+    }
+
+
+    function closeFoodManager() {
+
+  document.getElementById(
+    "foodManager"
+  ).style.display = "none";
+
+  document.querySelectorAll(
+    ".menu-grid .card"
+  ).forEach(function(card) {
+    card.style.display = "";
+  });
+
+  window.scrollTo({
+    top: 0,
+    behavior: "auto"
+  });
+
+  status.textContent =
+    "Food Manager closed.";
+
+}
+
+
+    /* =========================
+       GALLERY MANAGER
+    ========================= */
+
+    async function openGalleryManager() {
+
+  const manager =
+    document.getElementById("galleryManager");
+
+  document.querySelectorAll(
+    ".menu-grid .card"
+  ).forEach(function(card) {
+    card.style.display = "none";
+  });
+
+  manager.style.display = "block";
+
+  manager.scrollIntoView({
+    behavior: "smooth"
+  });
+
+  status.textContent =
+    "Gallery Manager opened.";
+
+  await loadGalleryImages();
+
+}
+
+
+    function closeGalleryManager() {
+
+  document.getElementById(
+    "galleryManager"
+  ).style.display = "none";
+
+  document.querySelectorAll(
+    ".menu-grid .card"
+  ).forEach(function(card) {
+    card.style.display = "";
+  });
+
+  window.scrollTo({
+    top: 0,
+    behavior: "auto"
+  });
+
+  status.textContent =
+    "Gallery Manager closed.";
+}
+
+
+    /* =========================
+       UPLOAD GALLERY IMAGE
+    ========================= */
+
+    async function uploadGalleryImage() {
+
+      const fileInput =
+        document.getElementById(
+          "galleryImageFile"
+        );
+
+      const file =
+        fileInput.files[0];
+
+      const manualUrl =
+        document.getElementById(
+          "galleryImageUrl"
+        ).value.trim();
+
+
+      if (!file && !manualUrl) {
+
+        status.textContent =
+          "Please select an image or enter an image URL.";
+
+        return;
+      }
+
+
+      /* Manual URL */
+
+      if (!file && manualUrl) {
+
+        const { error: dbError } =
+          await supabaseClient
+            .from("gallery")
+            .insert({
+              image_url: manualUrl
+            });
+
+        if (dbError) {
+
+          console.error(dbError);
+
+          status.textContent =
+            "Gallery save failed: " +
+            dbError.message;
+
+          return;
+        }
+
+        document.getElementById(
+          "galleryImageUrl"
+        ).value = "";
+
+        status.textContent =
+          "Gallery image saved successfully.";
+
+        await loadGalleryImages();
+
+        return;
+      }
+
+
+      /* File upload */
+
+      status.textContent =
+        "Uploading gallery image...";
+
+
+      const fileName =
+        Date.now() + "-" + file.name;
+
+
+      const { error } =
+        await supabaseClient
+          .storage
+          .from("gallery")
+          .upload(
+            fileName,
+            file,
+            {
+              cacheControl: "3600",
+              upsert: false
+            }
+          );
+
+
+      if (error) {
+
+        console.error(error);
+
+        status.textContent =
+          "Image upload failed: " +
+          error.message;
+
+        return;
+      }
+
+
+      const { data } =
+        supabaseClient
+          .storage
+          .from("gallery")
+          .getPublicUrl(fileName);
+
+
+      const imageUrl =
+        data.publicUrl;
+
+
+      const { error: dbError } =
+        await supabaseClient
+          .from("gallery")
+          .insert({
+            image_url: imageUrl
+          });
+
+
+      if (dbError) {
+
+        console.error(dbError);
+
+        status.textContent =
+          "Image uploaded but database save failed: " +
+          dbError.message;
+
+        return;
+      }
+
+
+      document.getElementById(
+        "galleryImageFile"
+      ).value = "";
+
+
+      document.getElementById(
+        "galleryImageUrl"
+      ).value = "";
+
+
+      status.textContent =
+        "Gallery image uploaded successfully.";
+
+
+      await loadGalleryImages();
+
+    }
+
+
+    /* =========================
+       LOAD FOOD DATA
+    ========================= */
+
+    async function loadFoodData() {
+
+      const foodList =
+        document.getElementById("foodList");
+
+
+      const { data, error } =
+        await supabaseClient
+          .from("foods")
+          .select("*")
+          .order("id", {
+            ascending: true
+          });
+
+
+      if (error) {
+
+        console.error(error);
+
+        foodList.innerHTML =
+          "<p>Could not load food data.</p>";
+
+        status.textContent =
+          "Could not load food data.";
+
+        return;
+      }
+
+
+      foodList.innerHTML = "";
+
+
+      data.forEach(function(food) {
+
+        const item =
+          document.createElement("div");
+
+        item.className =
+          "food-item";
+
+
+        const imageUrl =
+  food.image_url && food.image_url.startsWith("http")
+    ? food.image_url
+    : "../" + food.image_url;
+
+
+        const imagePreview =
+  imageUrl
+    ? `
+      <img
+        class="food-image-preview"
+        src="${imageUrl}"
+        alt="Food"
+        onerror="this.style.display='none';"
+      >
+    `
+    : "";
+
+
+        item.innerHTML = `
+
+  <div class="food-content">
+
+    <div class="food-details">
+
+      <label>Food Name</label>
+
+      <input
+        type="text"
+        id="foodName-${food.id}"
+        value="${food.name_en || ""}"
+      >
+
+      <label>Price (SAR)</label>
+
+      <input
+        type="number"
+        id="foodPrice-${food.id}"
+        value="${food.price ?? ""}"
+      >
+
+      <label>Food Image</label>
+
+      <input
+        type="file"
+        id="foodImage-${food.id}"
+        accept="image/*"
+      >
+
+      <button
+        class="save-food"
+        type="button"
+        onclick="uploadFoodImage(${food.id})"
+      >
+        🖼️ Upload Food Image
+      </button>
+
+      <button
+        class="delete-food"
+        type="button"
+        onclick="deleteFood(${food.id})"
+      >
+        🗑️ Delete Food
+      </button>
+
+    </div>
+
+        <div class="food-image-side">
+      ${imagePreview}
+    </div>
+
+  </div>
+
+`;
+
+         foodList.appendChild(item);
+
+      });
+
+    }
+
+
+    /* =========================
+       ESCAPE HTML
+    ========================= */
+
+    function escapeHtml(value) {
+
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+    }
+
+
+    /* =========================
+       SAVE SINGLE FOOD
+    ========================= */
+
+    async function saveSingleFood(foodId) {
+
+      const nameInput =
+        document.getElementById(
+          "foodName-" + foodId
+        );
+
+      const priceInput =
+        document.getElementById(
+          "foodPrice-" + foodId
+        );
+
+
+      if (!nameInput || !priceInput) {
+
+        status.textContent =
+          "Food fields not found.";
+
+        return;
+      }
+
+
+      const name =
+        nameInput.value.trim();
+
+      const price =
+        Number(priceInput.value);
+
+
+      if (!name || isNaN(price)) {
+
+        status.textContent =
+          "Please enter valid food name and price.";
+
+        return;
+      }
+
+
+      const { error } =
+        await supabaseClient
+          .from("foods")
+          .update({
+            name_en: name,
+            price: price
+          })
+          .eq("id", foodId);
+
+
+      if (error) {
+
+        console.error(error);
+
+        status.textContent =
+          "Could not save food.";
+
+        return;
+      }
+
+
+      status.textContent =
+        "Food saved successfully.";
+
+      await loadFoodData();
+
+    }
+
+
+    /* =========================
+       UPLOAD FOOD IMAGE
+    ========================= */
+
+    async function uploadFoodImage(foodId) {
+
+      const fileInput =
+        document.getElementById(
+          "foodImage-" + foodId
+        );
+
+
+      if (!fileInput) {
+
+        status.textContent =
+          "Food image field not found.";
+
+        return;
+      }
+
+
+      const file =
+        fileInput.files[0];
+
+
+      if (!file) {
+
+        status.textContent =
+          "Please select a food image.";
+
+        return;
+      }
+
+
+      status.textContent =
+        "Uploading food image...";
+
+
+      const fileName =
+        Date.now() + "-" + file.name;
+
+
+      const { error: uploadError } =
+        await supabaseClient
+          .storage
+          .from("food")
+          .upload(
+            fileName,
+            file,
+            {
+              cacheControl: "3600",
+              upsert: false
+            }
+          );
+
+
+      if (uploadError) {
+
+        console.error(
+          "Food upload error:",
+          uploadError
+        );
+
+        status.textContent =
+          "Food image upload failed: " +
+          uploadError.message;
+
+        return;
+      }
+
+
+      const { data: publicData } =
+        supabaseClient
+          .storage
+          .from("food")
+          .getPublicUrl(fileName);
+
+
+      if (
+        !publicData ||
+        !publicData.publicUrl
+      ) {
+
+        status.textContent =
+          "Image uploaded but public URL was not created.";
+
+        return;
+      }
+
+
+      const { error: dbError } =
+        await supabaseClient
+          .from("foods")
+          .update({
+            image_url: publicData.publicUrl
+          })
+          .eq("id", foodId);
+
+
+      if (dbError) {
+
+        console.error(dbError);
+
+        status.textContent =
+          "Image uploaded but food record was not updated: " +
+          dbError.message;
+
+        return;
+      }
+
+
+      fileInput.value = "";
+
+
+      status.textContent =
+        "Food image uploaded successfully.";
+
+
+      await loadFoodData();
+
+    }
+
+
+    /* =========================
+       DELETE FOOD
+    ========================= */
+
+    async function deleteFood(foodId) {
+
+      const confirmed =
+        confirm(
+          "এই food item টি কি সত্যিই delete করতে চান?"
+        );
+
+
+      if (!confirmed) {
+        return;
+      }
+
+
+      const { error } =
+        await supabaseClient
+          .from("foods")
+          .delete()
+          .eq("id", foodId);
+
+
+      if (error) {
+
+        console.error(
+          "Food delete error:",
+          error
+        );
+
+        status.textContent =
+          "Food delete failed: " +
+          error.message;
+
+        return;
+      }
+
+
+      status.textContent =
+        "Food deleted successfully.";
+
+
+      await loadFoodData();
+
+    }
+
+
+    /* =========================
+       ADD NEW FOOD
+    ========================= */
+
+    async function addNewFood() {
+
+      const name =
+        document.getElementById(
+          "newFoodName"
+        ).value.trim();
+
+
+      const price =
+        document.getElementById(
+          "newFoodPrice"
+        ).value;
+
+
+      if (!name || !price) {
+
+        status.textContent =
+          "Please enter food name and price.";
+
+        return;
+      }
+
+
+      const { error } =
+        await supabaseClient
+          .from("foods")
+          .insert({
+            name_en: name,
+            price: Number(price),
+            category: "food"
+          });
+
+
+      if (error) {
+
+        console.error(error);
+
+        status.textContent =
+          "Could not add food: " +
+          error.message;
+
+        return;
+      }
+
+
+      document.getElementById(
+        "newFoodName"
+      ).value = "";
+
+
+      document.getElementById(
+        "newFoodPrice"
+      ).value = "";
+
+
+      status.textContent =
+        "New food added successfully.";
+
+
+      await loadFoodData();
+
+    }
+
+    /* =========================
+   OPENING HOURS
+========================= */
+
+async function openHoursManager() {
+
+  let manager =
+    document.getElementById("hoursManager");
+
+  if (!manager) {
+
+    manager =
+      document.createElement("div");
+
+    manager.className = "manager";
+    manager.id = "hoursManager";
+
+    manager.innerHTML = `
+  <h2>🕐 Edit Opening Hours</h2>
+
+  <div
+  style="
+    display:grid;
+    grid-template-columns:minmax(0, 1fr) minmax(0, 1fr);
+    gap:12px;
+    align-items:stretch;
+  "
+>
+
+    <!-- OPENING HOURS -->
+    <div class="food-item">
+
+      <label>Morning Opening</label>
+      <input
+        type="time"
+        id="morningStart"
+      >
+
+      <label>Morning Closing</label>
+      <input
+        type="time"
+        id="morningEnd"
+      >
+
+      <label>Evening Opening</label>
+      <input
+        type="time"
+        id="eveningStart"
+      >
+
+      <label>Evening Closing</label>
+      <input
+        type="time"
+        id="eveningEnd"
+      >
+
+      <label>Timezone</label>
+
+      <select
+        id="timezone"
+        style="
+          width:100%;
+          padding:9px;
+          border:1px solid #d7e5e5;
+          border-radius:7px;
+          font-size:13px;
+          margin-bottom:8px;
+        "
+      >
+        <option value="Asia/Riyadh">
+          Saudi Arabia — Riyadh
+        </option>
+
+        <option value="Asia/Dhaka">
+          Bangladesh — Dhaka
+        </option>
+
+        <option value="Asia/Dubai">
+          UAE — Dubai
+        </option>
+
+        <option value="Asia/Kolkata">
+          India — Kolkata
+        </option>
+
+        <option value="Europe/London">
+          UK — London
+        </option>
+
+        <option value="Europe/Brussels">
+          Belgium — Brussels
+        </option>
+      </select>
+
+    </div>
+
+
+    <!-- CLOSED DAYS -->
+    <div class="food-item">
+
+      <label>📅 Closed Days</label>
+
+      <div
+        id="closedDays"
+        style="
+          display:grid;
+          grid-template-columns:1fr;
+          gap:6px;
+          margin-bottom:0;
+        "
+      >
+
+        <label>
+          <input
+            type="checkbox"
+            value="Saturday"
+          >
+          Saturday
+        </label>
+
+        <label>
+          <input
+            type="checkbox"
+            value="Sunday"
+          >
+          Sunday
+        </label>
+
+        <label>
+          <input
+            type="checkbox"
+            value="Monday"
+          >
+          Monday
+        </label>
+
+        <label>
+          <input
+            type="checkbox"
+            value="Tuesday"
+          >
+          Tuesday
+        </label>
+
+        <label>
+          <input
+            type="checkbox"
+            value="Wednesday"
+          >
+          Wednesday
+        </label>
+
+        <label>
+          <input
+            type="checkbox"
+            value="Thursday"
+          >
+          Thursday
+        </label>
+
+        <label>
+          <input
+            type="checkbox"
+            value="Friday"
+          >
+          Friday
+        </label>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ACTION BUTTONS -->
+
+  <button
+    class="save-food"
+    type="button"
+    onclick="saveOpeningHours()"
+  >
+    💾 Save Opening Hours
+  </button>
+
+  <button
+  class="close-manager"
+  type="button"
+  onclick="
+    document.getElementById('hoursManager').style.display='none';
+
+    document.querySelectorAll('.menu-grid .card').forEach(function(card) {
+      card.style.display = '';
+    });
+
+    window.scrollTo({
+      top: 0,
+      behavior: 'auto'
+    });
+  "
+>
+  ← Back to Dashboard
+</button>
+`;
+
+      document
+    .querySelector(".dashboard")
+    .appendChild(manager);
+  }
+
+  document.querySelectorAll(
+    ".menu-grid .card"
+  ).forEach(function(card) {
+    card.style.display = "none";
+  });
+
+  manager.style.display = "block";
+
+  manager.scrollIntoView({
+    behavior: "smooth"
+  });
+
+  const { data, error } =
+  await supabaseClient
+    .from("opening_hours")
+    .select("*")
+    .order("id", { ascending: true })
+    .limit(1);
+
+  if (error) {
+
+    console.error(error);
+
+    status.textContent =
+      "Could not load opening hours: " +
+      error.message;
+
+    return;
+  }
+
+  document.getElementById("morningStart").value =
+  data[0].morning_start || "05:30";
+
+document.getElementById("morningEnd").value =
+  data[0].morning_end || "12:00";
+
+document.getElementById("eveningStart").value =
+  data[0].evening_start || "16:00";
+
+document.getElementById("eveningEnd").value =
+  data[0].evening_end || "00:00";
+
+document.getElementById("timezone").value =
+  data[0].timezone || "Asia/Riyadh";
+  const closedDays =
+  data[0].closed_days || [];
+
+document
+  .querySelectorAll(
+    "#closedDays input[type='checkbox']"
+  )
+  .forEach(function (checkbox) {
+
+    checkbox.checked =
+      closedDays.includes(
+        checkbox.value
+      );
+
+  });
+}
+
+
+async function saveOpeningHours() {
+
+  const values = {
+
+    morning_start:
+      document.getElementById("morningStart").value,
+
+    morning_end:
+      document.getElementById("morningEnd").value,
+
+    evening_start:
+      document.getElementById("eveningStart").value,
+
+    evening_end:
+      document.getElementById("eveningEnd").value,
+
+    timezone:
+      document.getElementById("timezone").value,
+
+    closed_days:
+      Array.from(
+        document.querySelectorAll(
+          "#closedDays input[type='checkbox']:checked"
+        )
+      ).map(function (checkbox) {
+        return checkbox.value;
+      }),
+
+    updated_at:
+      new Date().toISOString()
+  };
+
+  const { data, error } =
+    await supabaseClient
+      .from("opening_hours")
+      .update(values)
+      .eq("id", 1)
+      .select();
+
+  if (error) {
+
+    console.error(error);
+
+    status.textContent =
+      "Save failed: " + error.message;
+
+    return;
+  }
+
+  if (!data || data.length === 0) {
+
+    status.textContent =
+      "Save failed: No row was updated.";
+
+    return;
+  }
+
+  status.textContent =
+    "Opening Hours saved successfully.";
+}
+
+
+    /* =========================
+       DELETE GALLERY IMAGE
+    ========================= */
+
+    async function deleteGalleryImage(id) {
+
+      if (
+        !confirm(
+          "Delete this gallery image?"
+        )
+      ) {
+        return;
+      }
+
+
+      const { error } =
+        await supabaseClient
+          .from("gallery")
+          .delete()
+          .eq("id", id);
+
+
+      if (error) {
+
+        console.error(
+          "Gallery delete error:",
+          error
+        );
+
+        status.textContent =
+          "Gallery delete failed: " +
+          error.message;
+
+        return;
+      }
+
+
+      status.textContent =
+        "Gallery image deleted successfully.";
+
+
+      await loadGalleryImages();
+
+    }
+async function loadGalleryImages() {
+
+  const galleryList =
+    document.getElementById("galleryList");
+
+  if (!galleryList) {
+    return;
+  }
+
+  galleryList.innerHTML =
+    "Loading gallery...";
+
+  const { data, error } =
+    await supabaseClient
+      .from("gallery")
+      .select("id, image_url")
+      .order("id", {
+        ascending: false
+      });
+
+  if (error) {
+
+    console.error(
+      "Gallery load error:",
+      error
+    );
+
+    galleryList.innerHTML =
+      "Could not load gallery.";
+
+    return;
+  }
+
+  galleryList.innerHTML = "";
+
+  if (!data || data.length === 0) {
+
+    galleryList.innerHTML =
+      "No gallery images found.";
+
+    return;
+  }
+
+  data.forEach(function(image) {
+
+    if (!image.image_url) {
+      return;
+    }
+
+    const item =
+  document.createElement("div");
+
+item.className =
+  "gallery-item";
+
+item.innerHTML = `
+  <img
+    src="${image.image_url}"
+    alt="Gallery Image"
+  >
+
+  <div class="gallery-item-info">
+
+    <span>Gallery Image</span>
+
+    <button
+      type="button"
+      class="delete-gallery"
+      onclick="deleteGalleryImage(${image.id})"
+    >
+      🗑️ Delete
+    </button>
+
+  </div>
+`;
+
+galleryList.appendChild(item);
+
+});
+
+}
+    
+/* ORDERS MANAGER */
+
+async function openOrdersManager() {
+  let manager = document.getElementById("ordersManager");
+
+  if (!manager) {
+    manager = document.createElement("div");
+    manager.id = "ordersManager";
+    manager.className = "manager";
+
+    manager.innerHTML = `
+      <h2>🛒 Manage Orders</h2>
+      <p id="ordersMessage">Loading orders...</p>
+      <div id="ordersList"></div>
+      <button type="button" class="close-manager"
+        onclick="closeOrdersManager()">
+        ← Back to Dashboard
+      </button>
+    `;
+
+    document.querySelector(".dashboard").appendChild(manager);
+  }
+
+  document.querySelectorAll(".menu-grid .card").forEach(function(card) {
+    card.style.display = "none";
+  });
+
+  document.querySelectorAll(".manager").forEach(function(item) {
+    item.style.display = "none";
+  });
+
+  manager.style.display = "block";
+  manager.scrollIntoView({ behavior: "smooth" });
+
+  await loadOrders();
+}
+
+function closeOrdersManager() {
+  const manager = document.getElementById("ordersManager");
+
+  if (manager) manager.style.display = "none";
+
+  document.querySelectorAll(".menu-grid .card").forEach(function(card) {
+    card.style.display = "";
+  });
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function ordersEscapeHtml(value) {
+  return String(value ?? "").replace(/[&<>"']/g, function(char) {
+    return {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    }[char];
+  });
+}
+
+async function loadOrders() {
+  const message = document.getElementById("ordersMessage");
+  const list = document.getElementById("ordersList");
+
+  if (!message || !list) return;
+
+  message.textContent = "Loading orders...";
+  list.innerHTML = "";
+
+  const { data: orders, error } = await supabaseClient
+    .from("orders")
+    .select("id, created_at, customer_name, customer_phone, customer_address, total_amount, status, order_number")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    message.textContent = "Could not load orders: " + error.message;
+    return;
+  }
+
+  if (!orders || orders.length === 0) {
+    message.textContent = "No orders found yet.";
+    return;
+  }
+
+  const orderIds = orders.map(function(order) {
+    return order.id;
+  });
+
+  const { data: items, error: itemsError } = await supabaseClient
+    .from("order_items")
+    .select("order_id, food_name, quantity, item_price, subtotal")
+    .in("order_id", orderIds);
+
+  if (itemsError) {
+    message.textContent = "Orders loaded, but order items could not load: " + itemsError.message;
+    return;
+  }
+
+  const statusOptions = [
+    ["pending", "Pending"],
+    ["preparing", "Preparing"],
+    ["ready", "Ready"],
+    ["completed", "Completed"],
+    ["cancelled", "Cancelled"]
+  ];
+
+  list.innerHTML = orders.map(function(order) {
+    const orderItems = (items || []).filter(function(item) {
+      return String(item.order_id) === String(order.id);
+    });
+
+    const currentStatus = String(order.status || "pending").toLowerCase();
+
+    let optionsHtml = statusOptions.map(function(option) {
+      return `<option value="${option[0]}" ${
+        currentStatus === option[0] ? "selected" : ""
+      }>${option[1]}</option>`;
+    }).join("");
+
+    if (!statusOptions.some(function(option) {
+      return option[0] === currentStatus;
+    })) {
+      optionsHtml += `<option value="${ordersEscapeHtml(currentStatus)}" selected>${ordersEscapeHtml(order.status)}</option>`;
+    }
+
+    const itemsHtml = orderItems.length
+      ? orderItems.map(function(item) {
+          return `<li>${ordersEscapeHtml(item.food_name)} × ${ordersEscapeHtml(item.quantity)} — SAR ${ordersEscapeHtml(item.subtotal)}</li>`;
+        }).join("")
+      : "<li>No items found</li>";
+
+    return `
+      <div class="card" style="margin:12px 0;padding:16px;">
+        <h3>Order #${ordersEscapeHtml(order.order_number || order.id)}</h3>
+        <p><strong>Customer:</strong> ${ordersEscapeHtml(order.customer_name)}</p>
+        <p><strong>Phone:</strong> ${ordersEscapeHtml(order.customer_phone)}</p>
+        <p><strong>Address:</strong> ${ordersEscapeHtml(order.customer_address)}</p>
+        <p><strong>Total:</strong> SAR ${ordersEscapeHtml(order.total_amount)}</p>
+        <p><strong>Date:</strong> ${ordersEscapeHtml(order.created_at)}</p>
+        <p><strong>Items:</strong></p>
+        <ul>${itemsHtml}</ul>
+        <label>Order Status</label>
+        <select onchange="updateOrderStatus('${ordersEscapeHtml(order.id)}', this.value)">
+          ${optionsHtml}
+        </select>
+      </div>
+    `;
+  }).join("");
+
+  message.textContent = "Total orders: " + orders.length;
+}
+
+async function updateOrderStatus(orderId, newStatus) {
+  const { data, error } = await supabaseClient
+    .from("orders")
+    .update({ status: newStatus })
+    .eq("id", orderId)
+    .select("id");
+
+  if (error) {
+    alert("Status update failed: " + error.message);
+    await loadOrders();
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    alert("Status was not updated. Check the admin permissions for the orders table.");
+    await loadOrders();
+    return;
+  }
+
+  alert("Order status updated successfully!");
+  await loadOrders();
+}
+
+    /* =========================
+       LOGOUT
+    ========================= */
+
+    logoutButton.addEventListener(
+      "click",
+      async function() {
+
+        status.textContent =
+          "Logging out...";
+
+
+        const { error } =
+          await supabaseClient
+            .auth
+            .signOut();
+
+
+        if (error) {
+
+          status.textContent =
+            "Logout failed.";
+
+          return;
+        }
+
+
+        window.location.href = "./";
+
+      }
+    );
+
+
+    /* =========================
+       START
+    ========================= */
+
+    checkSession();
+
+  </script>
+
+</body>
+</html>
