@@ -81,94 +81,99 @@
     }
 
     .welcome {
-      text-align: center;
-      margin-bottom: 28px;
-    }
-
-    .eyebrow {
-      color: var(--cyan);
-      font-size: 12px;
-      font-weight: bold;
-      letter-spacing: 2px;
-    }
-
-    h1 {
-      margin: 12px 0 8px;
-      font-size: clamp(27px, 5vw, 38px);
-    }
-
-    .welcome p {
-      color: var(--muted);
-      line-height: 1.6;
-      margin: 0;
-    }
-
-    .profile-card {
-      max-width: 680px;
-      margin: auto;
-      padding: 25px;
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      background: rgba(16, 59, 54, 0.94);
-      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.22);
-    }
-
-    .profile-top {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 22px;
-    }
-
-    .avatar {
-      width: 58px;
-      height: 58px;
-      flex-shrink: 0;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      color: var(--dark2);
-      background: var(--cyan);
-      font-size: 27px;
-    }
-
-    .profile-top h2 {
-      font-size: 20px;
-      margin: 0 0 6px;
-    }
-
-    .profile-top p {
-      color: var(--muted);
-      margin: 0;
-      overflow-wrap: anywhere;
-      font-size: 14px;
-    }
-
-    .account-info {
-      padding: 16px;
-      border-radius: 12px;
-      background: var(--dark2);
-      border: 1px solid var(--border);
-      margin-bottom: 22px;
-    }
-
-    .info-label {
-      color: var(--muted);
-      font-size: 12px;
-      margin-bottom: 7px;
-    }
-
-    #userEmail {
-      overflow-wrap: anywhere;
-      font-size: 15px;
-    }
-
-    .section-title {
-  font-size: 17px;
-  margin: 17px 0 9px;
+  text-align: center;
+  margin-bottom: 28px;
 }
 
-    .menu-grid {
+.eyebrow {
+  color: var(--cyan);
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+h1 {
+  margin: 12px 0 8px;
+  font-size: clamp(27px, 5vw, 38px);
+  color: var(--cyan);
+  text-shadow: 0 3px 15px rgba(0, 183, 195, 0.25);
+}
+
+.welcome p {
+  color: var(--muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.profile-card {
+  max-width: 680px;
+  margin: auto;
+  padding: 25px;
+  border: 1px solid rgba(0, 183, 195, 0.45);
+  border-radius: 18px;
+  background: linear-gradient(145deg, #164e48, #082b28);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.3);
+}
+
+.profile-top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.avatar {
+  width: 58px;
+  height: 58px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--dark2);
+  background: var(--cyan);
+  font-size: 27px;
+}
+
+.profile-top h2 {
+  font-size: 20px;
+  margin: 0 0 6px;
+  color: var(--cyan);
+}
+
+.profile-top p {
+  color: var(--muted);
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-size: 14px;
+}
+
+.account-info {
+  padding: 16px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #14534c, #082b28);
+  border: 1px solid var(--border);
+  margin-bottom: 22px;
+}
+
+.info-label {
+  color: var(--muted);
+  font-size: 12px;
+  margin-bottom: 7px;
+}
+
+#userEmail {
+  overflow-wrap: anywhere;
+  font-size: 15px;
+  color: var(--cream);
+}
+
+.section-title {
+  font-size: 17px;
+  margin: 17px 0 9px;
+  color: var(--cyan);
+}
+
+.menu-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
@@ -177,9 +182,9 @@
 .menu-card {
   display: block;
   padding: 11px;
-  border: 1px solid var(--border);
+  border: 1px solid rgba(0, 183, 195, 0.35);
   border-radius: 10px;
-  background: rgba(8, 43, 40, 0.75);
+  background: linear-gradient(135deg, #14534c, #082b28);
   transition: border-color 0.2s, transform 0.2s;
 }
 
@@ -191,6 +196,7 @@
 .menu-card h3 {
   margin: 0 0 5px;
   font-size: 14px;
+  color: var(--cyan);
 }
 
 .menu-card p {
@@ -200,12 +206,12 @@
   line-height: 1.4;
 }
 
-    .orders-box {
+.orders-box {
   padding: 8px 10px;
   text-align: center;
-  border: 1px solid var(--border);
+  border: 1px solid rgba(0, 183, 195, 0.35);
   border-radius: 8px;
-  background: transparent;
+  background: linear-gradient(135deg, #12443f, #082b28);
 }
 
 .orders-box .order-icon {
