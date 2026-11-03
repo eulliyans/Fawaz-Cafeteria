@@ -1525,14 +1525,6 @@ body {
   text-decoration: none;
   white-space: nowrap;
 }
-    /* Desktop: 3 food cards per row */
-@media (min-width: 901px) {
-  .food-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 16px;
-  }
-}
   </style>
 </head>
 
@@ -3393,111 +3385,84 @@ async function loadFoodData() {
   );
 
   let activeIndex = 0;
-  let startX = 0;
-  let isDragging = false;
+let startX = 0;
+let isDragging = false;
+let ignoreClickUntil = 0;
 
-  function updateFoodCarousel() {
+function updateFoodCarousel() {
+  cards.forEach(function(card, index) {
+    card.classList.remove("active", "prev", "next", "hidden");
 
-    cards.forEach(function(card, index) {
-
-      card.classList.remove(
-        "active",
-        "prev",
-        "next",
-        "hidden"
-      );
-
-      if (index === activeIndex) {
-
-        card.classList.add("active");
-
-      } else if (
-        index === (activeIndex - 1 + cards.length) % cards.length
-      ) {
-
-        card.classList.add("prev");
-
-      } else if (
-        index === (activeIndex + 1) % cards.length
-      ) {
-
-        card.classList.add("next");
-
-      } else {
-
-        card.classList.add("hidden");
-
-      }
-
-    });
-
-  }
-
-  function moveFood(direction) {
-
-    if (cards.length < 2) return;
-
-    activeIndex =
-      (activeIndex + direction + cards.length) % cards.length;
-
-    updateFoodCarousel();
-
-  }
-
-  foodGrid.addEventListener("pointerdown", function(event) {
-
-    startX = event.clientX;
-    isDragging = true;
-
-  });
-
-  foodGrid.addEventListener("pointerup", function(event) {
-
-    if (!isDragging) return;
-
-    isDragging = false;
-
-    const difference = event.clientX - startX;
-
-    if (Math.abs(difference) > 40) {
-
-      if (difference < 0) {
-        moveFood(1);
-      } else {
-        moveFood(-1);
-      }
-
-    }
-
-  });
-
-  foodGrid.addEventListener("pointercancel", function() {
-    isDragging = false;
-  });
-
-  foodGrid.addEventListener("click", function(event) {
-
-    const card = event.target.closest(".food-card");
-
-    if (!card) return;
-
-    const clickedIndex = Number(card.dataset.index);
-
-    if (
-      Number.isInteger(clickedIndex) &&
-      clickedIndex !== activeIndex
+    if (index === activeIndex) {
+      card.classList.add("active");
+    } else if (
+      index === (activeIndex - 1 + cards.length) % cards.length
     ) {
-
-      activeIndex = clickedIndex;
-      updateFoodCarousel();
-
+      card.classList.add("prev");
+    } else if (
+      index === (activeIndex + 1) % cards.length
+    ) {
+      card.classList.add("next");
+    } else {
+      card.classList.add("hidden");
     }
-
   });
+}
+
+function moveFood(direction) {
+  if (cards.length < 2) return;
+
+  activeIndex =
+    (activeIndex + direction + cards.length) % cards.length;
 
   updateFoodCarousel();
-
 }
+
+foodGrid.addEventListener("pointerdown", function(event) {
+  startX = event.clientX;
+  isDragging = true;
+
+  foodGrid.setPointerCapture(event.pointerId);
+});
+
+foodGrid.addEventListener("pointerup", function(event) {
+  if (!isDragging) return;
+
+  isDragging = false;
+
+  const difference = event.clientX - startX;
+
+  if (Math.abs(difference) > 40) {
+    ignoreClickUntil = Date.now() + 500;
+
+    if (difference < 0) {
+      moveFood(1);
+    } else {
+      moveFood(-1);
+    }
+  }
+});
+
+foodGrid.addEventListener("pointercancel", function() {
+  isDragging = false;
+});
+
+foodGrid.addEventListener("click", function(event) {
+  if (Date.now() < ignoreClickUntil) return;
+
+  const card = event.target.closest(".food-card");
+  if (!card) return;
+
+  const clickedIndex = Number(card.dataset.index);
+
+  if (
+    Number.isInteger(clickedIndex) &&
+    clickedIndex !== activeIndex
+  ) {
+    activeIndex = clickedIndex;
+    updateFoodCarousel();
+  }
+});
 
 loadHeroData();
 loadCustomContent();
