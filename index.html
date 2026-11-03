@@ -3354,10 +3354,6 @@ foodGrid.addEventListener("pointerup", function(event) {
   }
 });
 
-foodGrid.addEventListener("pointercancel", function() {
-  isDragging = false;
-});
-
 foodGrid.addEventListener("click", function(event) {
   if (Date.now() < ignoreClickUntil) return;
 
@@ -3374,6 +3370,9 @@ foodGrid.addEventListener("click", function(event) {
     updateFoodCarousel();
   }
 });
+
+updateFoodCarousel();
+}
 
 loadHeroData();
 loadCustomContent();
