@@ -437,7 +437,8 @@
     }
 
     
- /* =========================
+ 
+/* =========================
    FOOD — 3D COVERFLOW
 ========================== */
 
@@ -449,47 +450,59 @@
   );
 }
 
-.food-grid {
-  position: relative;
-  width: 100%;
-  height: 390px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+#foodGrid.food-grid {
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+  height: 390px !important;
+  margin: 20px auto 0;
+  padding: 0 !important;
+  overflow: hidden !important;
   perspective: 1200px;
-  overflow: hidden;
   touch-action: pan-y;
+  box-sizing: border-box;
 }
 
-.food-card {
-  position: absolute;
-  width: 270px;
-  max-width: 72%;
+#foodGrid.food-grid > .food-card {
+  position: absolute !important;
+  display: block !important;
+  top: 50% !important;
+  left: 50% !important;
+
+  width: 270px !important;
+  max-width: 72% !important;
+  margin: 0 !important;
+
   background: var(--theme-card-background, #0b2023);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   overflow: hidden;
+
   box-shadow: 0 18px 45px rgba(0,0,0,.35);
+
+  box-sizing: border-box;
 
   transition:
     transform .55s ease,
     opacity .55s ease,
     filter .55s ease;
 
-  transform: translateX(0) scale(1);
-  opacity: 1;
-  filter: blur(0);
-  z-index: 3;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  filter: blur(8px);
+  pointer-events: none;
 }
 
-.food-card .food-image {
+/* Food Image */
+
+#foodGrid .food-image {
   display: block;
   width: 100%;
   height: 230px;
   object-fit: cover;
 }
 
-.food-card .food-name {
+#foodGrid .food-name {
   padding: 13px 10px 7px;
   font-size: 17px;
   font-weight: 800;
@@ -497,7 +510,7 @@
   text-align: center;
 }
 
-.food-card .food-price {
+#foodGrid .food-price {
   display: block;
   padding: 0 10px 14px;
   color: var(--gold);
@@ -508,93 +521,84 @@
 
 /* Center Food */
 
-.food-card.active {
-  transform: translateX(0) scale(1);
-  opacity: 1;
-  filter: blur(0);
-  z-index: 5;
+#foodGrid .food-card.active {
+  transform: translate(-50%, -50%) scale(1) !important;
+  opacity: 1 !important;
+  filter: blur(0) !important;
+  z-index: 5 !important;
+  pointer-events: auto;
 }
 
 /* Left Food */
 
-.food-card.prev {
-  transform: translateX(-72%) scale(.76) rotateY(22deg);
-  opacity: .65;
-  filter: blur(2px);
-  z-index: 2;
+#foodGrid .food-card.prev {
+  transform:
+    translate(-50%, -50%)
+    translateX(-68%)
+    scale(.76)
+    rotateY(20deg) !important;
+
+  opacity: .65 !important;
+  filter: blur(2px) !important;
+  z-index: 3 !important;
+  pointer-events: auto;
 }
 
 /* Right Food */
 
-.food-card.next {
-  transform: translateX(72%) scale(.76) rotateY(-22deg);
-  opacity: .65;
-  filter: blur(2px);
-  z-index: 2;
+#foodGrid .food-card.next {
+  transform:
+    translate(-50%, -50%)
+    translateX(68%)
+    scale(.76)
+    rotateY(-20deg) !important;
+
+  opacity: .65 !important;
+  filter: blur(2px) !important;
+  z-index: 3 !important;
+  pointer-events: auto;
 }
 
 /* Other Foods */
 
-.food-card.hidden {
-  transform: translateX(0) scale(.5);
-  opacity: 0;
-  filter: blur(8px);
-  pointer-events: none;
-  z-index: 1;
+#foodGrid .food-card.hidden {
+  transform: translate(-50%, -50%) scale(.4) !important;
+  opacity: 0 !important;
+  filter: blur(8px) !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
 }
 
+/* Mobile */
+
 @media (max-width: 600px) {
-  .food-grid {
-    height: 330px;
+
+  #foodGrid.food-grid {
+    height: 330px !important;
   }
 
-  .food-card {
-    width: 245px;
-    max-width: 74%;
+  #foodGrid.food-grid > .food-card {
+    width: 245px !important;
+    max-width: 74% !important;
   }
 
-  .food-card .food-image {
+  #foodGrid .food-image {
     height: 190px;
   }
 
-  .food-card .food-name {
+  #foodGrid .food-name {
     font-size: 15px;
   }
 
-  .food-card .food-price {
+  #foodGrid .food-price {
     font-size: 14px;
   }
 }
-    .full-gallery-btn-wrap {
-      text-align: center;
-      margin-top: 34px;
-    }
 
-    .full-gallery-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-
-      color: var(--cyan-soft);
-
-      border: 1px solid var(--border);
-      background: rgba(0,180,190,.08);
-
-      padding: 12px 19px;
-      border-radius: 12px;
-
-      font-weight: 800;
-      font-size: 14px;
-
-      cursor: pointer;
-
-      transition: .25s ease;
-    }
-
-    .full-gallery-btn:hover {
-      background: var(--cyan);
-      color: #002c30;
-    }
+.full-gallery-btn-wrap {
+  text-align: center;
+  margin-top: 34px;
+}
 
     /* =========================
        OPENING HOURS
@@ -3338,6 +3342,7 @@ async function loadWhatsAppData() {
       link.textContent = displayNumber;
     });
 }
+
 async function loadFoodData() {
 
   const foodGrid = document.getElementById("foodGrid");
@@ -3350,7 +3355,7 @@ async function loadFoodData() {
     .order("id", { ascending: true });
 
   if (error) {
-    console.error(error);
+    console.error("Food loading error:", error);
     return;
   }
 
@@ -3368,7 +3373,7 @@ async function loadFoodData() {
     image.className = "food-image";
     image.src = food.image_url || "";
     image.alt = food.name_en || "Food";
-    image.loading = "lazy";
+    image.loading = index < 3 ? "eager" : "lazy";
 
     const name = document.createElement("div");
     name.className = "food-name";
@@ -3389,7 +3394,7 @@ async function loadFoodData() {
 
   let activeIndex = 0;
   let startX = 0;
-  let ignoreClickUntil = 0;
+  let isDragging = false;
 
   function updateFoodCarousel() {
 
@@ -3403,23 +3408,25 @@ async function loadFoodData() {
       );
 
       if (index === activeIndex) {
-        card.classList.add("active");
-      }
 
-      else if (
+        card.classList.add("active");
+
+      } else if (
         index === (activeIndex - 1 + cards.length) % cards.length
       ) {
-        card.classList.add("prev");
-      }
 
-      else if (
+        card.classList.add("prev");
+
+      } else if (
         index === (activeIndex + 1) % cards.length
       ) {
-        card.classList.add("next");
-      }
 
-      else {
+        card.classList.add("next");
+
+      } else {
+
         card.classList.add("hidden");
+
       }
 
     });
@@ -3438,16 +3445,21 @@ async function loadFoodData() {
   }
 
   foodGrid.addEventListener("pointerdown", function(event) {
+
     startX = event.clientX;
+    isDragging = true;
+
   });
 
   foodGrid.addEventListener("pointerup", function(event) {
 
+    if (!isDragging) return;
+
+    isDragging = false;
+
     const difference = event.clientX - startX;
 
-    if (Math.abs(difference) > 45) {
-
-      ignoreClickUntil = Date.now() + 400;
+    if (Math.abs(difference) > 40) {
 
       if (difference < 0) {
         moveFood(1);
@@ -3459,9 +3471,11 @@ async function loadFoodData() {
 
   });
 
-  foodGrid.addEventListener("click", function(event) {
+  foodGrid.addEventListener("pointercancel", function() {
+    isDragging = false;
+  });
 
-    if (Date.now() < ignoreClickUntil) return;
+  foodGrid.addEventListener("click", function(event) {
 
     const card = event.target.closest(".food-card");
 
@@ -3469,9 +3483,14 @@ async function loadFoodData() {
 
     const clickedIndex = Number(card.dataset.index);
 
-    if (Number.isInteger(clickedIndex)) {
+    if (
+      Number.isInteger(clickedIndex) &&
+      clickedIndex !== activeIndex
+    ) {
+
       activeIndex = clickedIndex;
       updateFoodCarousel();
+
     }
 
   });
@@ -3479,6 +3498,7 @@ async function loadFoodData() {
   updateFoodCarousel();
 
 }
+
 loadHeroData();
 loadCustomContent();
 loadTodayStatus();
